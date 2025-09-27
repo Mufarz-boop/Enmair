@@ -2,56 +2,81 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<section class="py-5">
+  <div class="container">
 
-  <!-- Header -->
-  <h1 class="text-center mb-5 fw-bold text-gradient display-4">Blog</h1>
+    <!-- Judul -->
+    <h1 class="text-center mb-5 fw-bold text-gradient display-4">Blog</h1>
 
-  <!-- Grid Blog -->
-  <div class="row g-4">
-    {% for post in posts %}
-    <div class="col-6 col-md-4">
-      <div class="card blog-card shadow-lg border-0 rounded-4 h-100 overflow-hidden position-relative">
-        <!-- Image -->
-        <img src="{{ url_for('static', filename='image/' ~ post.image) }}" 
-             class="card-img-top object-fit-cover" 
-             alt="{{ post.title }}" style="height:250px;">
+    <!-- Daftar Post -->
+    <div class="row g-4">
 
-        <!-- Overlay -->
-        <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-0 d-flex flex-column justify-content-end p-3 text-light transition">
-          <h5 class="mb-1 fw-bold">{{ post.title }}</h5>
-          <small>{{ post.short_desc }}</small>
-        </div>
-
-        <!-- Card body -->
-        <div class="card-body">
-          <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> {{ post.date }}</p>
-          <p class="card-text preview">{{ post.short_desc }}</p>
-          <button class="btn btn-outline-primary mt-2 toggle-content">Read More</button>
-          <div class="full-content d-none mt-2">{{ post.full_content }}</div>
+      <!-- Post 1 -->
+      <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-4 h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Belajar Flask dari Nol</h5>
+            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 27 September 2025</p>
+            <p class="card-text text-muted preview">
+              Flask itu microframework Python yang ringan, gampang dipakai buat bikin website dinamis.
+              Cocok banget buat pemula yang baru kenalan sama web development...
+            </p>
+            <!-- Konten penuh disembunyikan -->
+            <div class="card-text text-muted full-content d-none">
+              Flask adalah framework Python yang memudahkan pembuatan website dinamis. 
+              Dengan Flask, kita bisa membuat routing, template, form handling, dan API endpoint dengan mudah. 
+              Cocok untuk belajar konsep web development dan prototyping cepat.
+            </div>
+            <button class="btn btn-outline-primary mt-2 toggle-content">Read More</button>
+          </div>
         </div>
       </div>
-    </div>
-    {% endfor %}
-  </div>
 
-</div>
+      <!-- Post 2 -->
+      <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-4 h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Tips Styling dengan CSS Modern</h5>
+            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 20 September 2025</p>
+            <p class="card-text text-muted preview">
+              CSS modern sekarang punya banyak fitur keren seperti flexbox, grid, dan custom properties...
+            </p>
+            <div class="card-text text-muted full-content d-none">
+              Dengan CSS modern, kita bisa membuat layout lebih fleksibel menggunakan flexbox, grid, 
+              dan custom properties. Animasi dan transisi pun lebih smooth. Hal ini bikin desain lebih 
+              rapi, responsif, dan mudah di-maintain.
+            </div>
+            <button class="btn btn-outline-primary mt-2 toggle-content">Read More</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Post 3 -->
+      <div class="col-md-6">
+        <div class="card shadow-lg border-0 rounded-4 h-100">
+          <div class="card-body">
+            <h5 class="card-title fw-bold">Mengapa GitHub Penting?</h5>
+            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 15 September 2025</p>
+            <p class="card-text text-muted preview">
+              GitHub bukan cuma tempat taruh kode, tapi juga platform kolaborasi, portfolio, dan dokumentasi project...
+            </p>
+            <div class="card-text text-muted full-content d-none">
+              GitHub menyediakan repository online untuk kode, memudahkan kolaborasi tim, 
+              version control, dan dokumentasi. Recruiter juga sering mengecek GitHub kandidat untuk melihat kualitas kode dan project yang pernah dibuat.
+            </div>
+            <button class="btn btn-outline-primary mt-2 toggle-content">Read More</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
 {% endblock %}
 
 {% block scripts %}
 <script>
-  // Hover effect overlay
-  document.querySelectorAll('.blog-card').forEach(card => {
-    card.addEventListener('mouseenter', () => {
-      const overlay = card.querySelector('.overlay');
-      overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
-    });
-    card.addEventListener('mouseleave', () => {
-      const overlay = card.querySelector('.overlay');
-      overlay.style.backgroundColor = 'rgba(0,0,0,0)';
-    });
-  });
-
   // Toggle Read More
   document.querySelectorAll('.toggle-content').forEach(btn => {
     btn.addEventListener('click', function(){
