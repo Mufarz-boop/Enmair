@@ -2,62 +2,69 @@
 {% block title %}Blog{% endblock %}
 
 {% block content %}
-<section class="py-5">
-  <div class="container">
+<div class="container py-5">
 
-    <!-- Judul -->
-    <h1 class="text-center mb-5 fw-bold text-gradient display-4">Blog</h1>
+  <!-- Header -->
+  <h1 class="text-center mb-5 fw-bold text-gradient display-4">Blog</h1>
 
-    <!-- Daftar Post -->
-    <div class="row g-4">
+  <!-- Grid Blog -->
+  <div class="row g-4">
+    {% for post in posts %}
+    <div class="col-6 col-md-4">
+      <div class="card blog-card shadow-lg border-0 rounded-4 h-100 overflow-hidden position-relative">
+        <!-- Image -->
+        <img src="{{ url_for('static', filename='image/' ~ post.image) }}" 
+             class="card-img-top object-fit-cover" 
+             alt="{{ post.title }}" style="height:250px;">
 
-      <!-- Post 1 -->
-      <div class="col-md-6">
-        <div class="card shadow-lg border-0 rounded-4 h-100">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Belajar Flask dari Nol</h5>
-            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 27 September 2025</p>
-            <p class="card-text text-muted">
-              Flask itu microframework Python yang ringan, gampang dipakai buat bikin website dinamis.
-              Cocok banget buat pemula yang baru kenalan sama web development...
-            </p>
-            <a href="#" class="btn btn-outline-primary">Read More</a>
-          </div>
+        <!-- Overlay -->
+        <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-0 d-flex flex-column justify-content-end p-3 text-light transition">
+          <h5 class="mb-1 fw-bold">{{ post.title }}</h5>
+          <small>{{ post.short_desc }}</small>
+        </div>
+
+        <!-- Card body -->
+        <div class="card-body">
+          <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> {{ post.date }}</p>
+          <p class="card-text preview">{{ post.short_desc }}</p>
+          <button class="btn btn-outline-primary mt-2 toggle-content">Read More</button>
+          <div class="full-content d-none mt-2">{{ post.full_content }}</div>
         </div>
       </div>
-
-      <!-- Post 2 -->
-      <div class="col-md-6">
-        <div class="card shadow-lg border-0 rounded-4 h-100">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Tips Styling dengan CSS Modern</h5>
-            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 20 September 2025</p>
-            <p class="card-text text-muted">
-              CSS modern sekarang punya banyak fitur keren seperti flexbox, grid, dan custom properties.
-              Kalau dimanfaatkan, hasil desain bisa lebih rapi, responsif, dan gampang di-maintain...
-            </p>
-            <a href="#" class="btn btn-outline-primary">Read More</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- Post 3 -->
-      <div class="col-md-6">
-        <div class="card shadow-lg border-0 rounded-4 h-100">
-          <div class="card-body">
-            <h5 class="card-title fw-bold">Mengapa GitHub Penting?</h5>
-            <p class="text-muted mb-2"><i class="bi bi-calendar-event me-1"></i> 15 September 2025</p>
-            <p class="card-text text-muted">
-              GitHub bukan cuma tempat taruh kode, tapi juga platform kolaborasi, portfolio, dan dokumentasi project.
-              Banyak recruiter ngecek GitHub kandidat sebelum interview...
-            </p>
-            <a href="#" class="btn btn-outline-primary">Read More</a>
-          </div>
-        </div>
-      </div>
-
     </div>
-
+    {% endfor %}
   </div>
-</section>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Hover effect overlay
+  document.querySelectorAll('.blog-card').forEach(card => {
+    card.addEventListener('mouseenter', () => {
+      const overlay = card.querySelector('.overlay');
+      overlay.style.backgroundColor = 'rgba(0,0,0,0.5)';
+    });
+    card.addEventListener('mouseleave', () => {
+      const overlay = card.querySelector('.overlay');
+      overlay.style.backgroundColor = 'rgba(0,0,0,0)';
+    });
+  });
+
+  // Toggle Read More
+  document.querySelectorAll('.toggle-content').forEach(btn => {
+    btn.addEventListener('click', function(){
+      const card = this.closest('.card-body');
+      const full = card.querySelector('.full-content');
+      if(full.classList.contains('d-none')){
+        full.classList.remove('d-none');
+        this.innerText = 'Read Less';
+      } else {
+        full.classList.add('d-none');
+        this.innerText = 'Read More';
+      }
+    });
+  });
+</script>
 {% endblock %}

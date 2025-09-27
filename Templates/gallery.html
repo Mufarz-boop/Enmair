@@ -2,44 +2,64 @@
 {% block title %}Gallery{% endblock %}
 
 {% block content %}
-<div class="d-flex">
+<div class="container py-4">
 
-  <!-- Sidebar -->
-  <aside class="bg-dark text-light p-3" style="width: 250px; min-height: 100vh;">
-    <h5 class="fw-bold mb-4">Gallery</h5>
-    <ul class="nav flex-column">
-      <li class="nav-item mb-2"><a href="#" class="nav-link text-light">Photos</a></li>
-      <li class="nav-item mb-2"><a href="" class="nav-link text-light">Favorites</a></li>
-      <li class="nav-item mb-2"><a href="" class="nav-link text-light">Videos</a></li>
-    </ul>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="flex-grow-1 p-4">
-    <!-- Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <div>
-        <h2 class="fw-bold">Gallery</h2>
-        <p class="text-muted">{{ total }} photos</p>
-      </div>
-      <div>
-        <button class="btn btn-outline-secondary me-2"><i class="bi bi-funnel"></i></button>
-        <button class="btn btn-outline-secondary"><i class="bi bi-grid-3x3-gap"></i></button>
-      </div>
+  <!-- Header dengan filter -->
+  <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+    <div>
+      <h2 class="fw-bold" id="galleryTitle">Photos</h2>
+      <!-- Subtitle dihapus / dikosongkan -->
+      <!-- <p class="text-muted" id="gallerySubtitle">{{ total }} photos</p> -->
     </div>
 
-    <!-- Gallery Grid -->
-    <div class="row g-3">
+    <!-- Filter navbar -->
+    <ul class="nav nav-pills mt-3 mt-md-0">
+      <li class="nav-item">
+        <a href="#" class="nav-link active" data-filter="photos">Photos</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link" data-filter="videos">Videos</a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Form Upload -->
+  <div class="card shadow-sm border-0 rounded-3 mb-4">
+    <div class="card-body">
+      <h5 class="fw-bold mb-3">
+        <i class="bi bi-cloud-upload text-primary me-2"></i> Upload Media
+      </h5>
+      <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+          <label for="fileUpload" class="form-label text-muted">Choose photo or video</label>
+          <input type="file" id="fileUpload" name="file" 
+                 class="form-control" 
+                 accept=".jpg,.jpeg,.png,.gif,.mp4,.webm,.avi" required>
+        </div>
+        <button class="btn btn-primary w-100" type="submit">
+          <i class="bi bi-upload me-1"></i> Upload
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Gallery Sections -->
+  <div id="galleryContent">
+
+    <!-- Photos Section -->
+    <div class="row g-3 gallery-section" id="photosSection">
       {% for img in images %}
       <div class="col-6 col-md-3">
-        <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#imageModal{{ loop.index }}">
+        <div class="gallery-item position-relative">
           <img src="{{ url_for('static', filename='image/' ~ img) }}" 
-               class="w-100 rounded-3 shadow-sm" 
+               class="w-100 rounded-3 shadow-sm open-modal" 
+               data-bs-toggle="modal" 
+               data-bs-target="#imageModal{{ loop.index }}"
                alt="{{ img }}">
         </div>
       </div>
 
-      <!-- Modal -->
+      <!-- Modal untuk setiap foto -->
       <div class="modal fade" id="imageModal{{ loop.index }}" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg">
           <div class="modal-content bg-transparent border-0">
@@ -51,7 +71,76 @@
       </div>
       {% endfor %}
     </div>
-  </main>
+
+    <!-- Videos Section -->
+    <div class="row g-3 gallery-section d-none" id="videosSection">
+      {% if videos %}
+        {% for vid in videos %}
+        <div class="col-6 col-md-3">
+          <div class="gallery-item position-relative">
+            <video class="w-100 rounded-3 shadow-sm open-modal" 
+                   data-bs-toggle="modal" 
+                   data-bs-target="#videoModal{{ loop.index }}">
+              <source src="{{ url_for('static', filename='video/' ~ vid) }}" type="video/mp4">
+              Browser kamu tidak mendukung video tag.
+            </video>
+            <button class="btn btn-light btn-sm position-absolute top-0 end-0 m-2">
+              <i class="bi bi-play-btn"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal untuk setiap video -->
+        <div class="modal fade" id="videoModal{{ loop.index }}" tabindex="-1" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content bg-transparent border-0">
+              <video controls autoplay class="w-100 rounded-4 shadow-lg">
+                <source src="{{ url_for('static', filename='video/' ~ vid) }}" type="video/mp4">
+              </video>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center text-muted">No videos yet.</div>
+      {% endif %}
+    </div>
+
+  </div>
 
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Gallery filter
+  document.querySelectorAll('.nav-pills .nav-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      // update active state
+      document.querySelectorAll('.nav-pills .nav-link').forEach(l => l.classList.remove('active'));
+      this.classList.add('active');
+
+      // toggle sections
+      document.querySelectorAll('.gallery-section').forEach(sec => sec.classList.add('d-none'));
+      const filter = this.getAttribute('data-filter');
+      document.getElementById(filter + 'Section').classList.remove('d-none');
+
+      // update title
+      document.getElementById('galleryTitle').innerText = this.innerText;
+    });
+  });
+
+  // Pause video ketika modal ditutup
+  document.querySelectorAll('.modal').forEach(modal => {
+    modal.addEventListener('hidden.bs.modal', () => {
+      const video = modal.querySelector('video');
+      if (video) {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  });
+</script>
 {% endblock %}

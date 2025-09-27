@@ -238,3 +238,25 @@ aside .nav-link:hover {
     height: 200px;       /* atur tinggi seragam, bisa 180–250px sesuai selera */
     object-fit: cover;   /* gambar dipotong proporsional */
 }
+
+.favorite-btn, .remove-fav {
+  border-radius: 50%;
+  padding: 6px 9px;
+  background: rgba(255,255,255,0.8);
+}
+.favorite-btn:hover {
+  background: #ffebee;
+}
+.remove-fav:hover {
+  background: #ffcdd2;
+}
+
+/* static/css/style.css */
+.modal-content img,
+.modal-content video {
+  max-height: 80vh;   /* maksimal 80% tinggi layar */
+  width: auto;
+  margin: auto;
+  display: block;
+  object-fit: contain; /* biar tidak ketarik-tarik */
+}
