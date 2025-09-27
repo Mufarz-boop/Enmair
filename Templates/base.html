@@ -17,6 +17,9 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
+  <!-- Favicon PNG -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+
   {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -24,9 +27,9 @@
 <!-- 🌟 NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center" href="/">
-      <i class="bi bi-crown text-warning me-2"></i>
-      <span>Star<span class="text-warning">King</span></span>
+    <a class="navbar-brand fw-bold d-flex align-items-center">
+      <i class="bi bi-stars"></i>
+      <span> Star<span><span class="text-warning">King</span></span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
