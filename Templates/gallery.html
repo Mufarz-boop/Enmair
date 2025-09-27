@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block title %}Gallery{% endblock %}
+
+{% block content %}
+<div class="d-flex">
+
+  <!-- Sidebar -->
+  <aside class="bg-dark text-light p-3" style="width: 250px; min-height: 100vh;">
+    <h5 class="fw-bold mb-4">Gallery</h5>
+    <ul class="nav flex-column">
+      <li class="nav-item mb-2"><a href="#" class="nav-link text-light">Photos</a></li>
+      <li class="nav-item mb-2"><a href="" class="nav-link text-light">Favorites</a></li>
+      <li class="nav-item mb-2"><a href="" class="nav-link text-light">Videos</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-grow-1 p-4">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="fw-bold">Gallery</h2>
+        <p class="text-muted">{{ total }} photos</p>
+      </div>
+      <div>
+        <button class="btn btn-outline-secondary me-2"><i class="bi bi-funnel"></i></button>
+        <button class="btn btn-outline-secondary"><i class="bi bi-grid-3x3-gap"></i></button>
+      </div>
+    </div>
+
+    <!-- Gallery Grid -->
+    <div class="row g-3">
+      {% for img in images %}
+      <div class="col-6 col-md-3">
+        <div class="gallery-item" data-bs-toggle="modal" data-bs-target="#imageModal{{ loop.index }}">
+          <img src="{{ url_for('static', filename='image/' ~ img) }}" 
+               class="w-100 rounded-3 shadow-sm" 
+               alt="{{ img }}">
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="imageModal{{ loop.index }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+          <div class="modal-content bg-transparent border-0">
+            <img src="{{ url_for('static', filename='image/' ~ img) }}" 
+                 class="w-100 rounded-4 shadow-lg" 
+                 alt="{{ img }}">
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </main>
+
+</div>
+{% endblock %}

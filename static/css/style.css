@@ -1,0 +1,240 @@
+/* ======= Style Global ======= */
+body {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ======= Navbar ======= */
+.navbar-brand span {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.navbar .nav-link {
+    transition: 0.3s;
+}
+.navbar .nav-link:hover {
+    color: #ffd700 !important;
+}
+
+/* ======= Heading ======= */
+h1.display-4 {
+    color: #1a237e;
+    /* Gunakan bayangan tipis agar teks tetap tajam */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+/* ======= Paragraf Lead ======= */
+p.lead {
+    max-width: 700px;
+    margin: auto;
+    color: #444;
+    line-height: 1.7;
+}
+
+/* ======= Tombol ======= */
+.btn-primary {
+    background-color: #3949ab;
+    border-color: #3949ab;
+    transition: 0.3s ease;
+}
+.btn-primary:hover {
+    background-color: #283593;
+    border-color: #283593;
+}
+.btn-outline-secondary {
+    color: #3949ab;
+    border-color: #3949ab;
+    transition: 0.3s ease;
+}
+.btn-outline-secondary:hover {
+    background-color: #3949ab;
+    color: #fff;
+    border-color: #3949ab;
+}
+
+/* ======= Carousel ======= */
+.carousel-caption {
+    backdrop-filter: blur(4px);
+    border-radius: 10px;
+}
+
+/* ======= Footer ======= */
+footer {
+    background-color: #1a237e;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: auto;
+}
+footer a {
+    color: #fff;
+    transition: 0.3s;
+}
+footer a:hover {
+    color: #ffd700;
+}
+
+/* 🌈 Gradien untuk Judul (PERBAIKAN: gunakan background-clip yg benar) */
+.text-gradient {
+    background: linear-gradient(90deg, #ffd700, #f39c12);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* 🌌 Section Background */
+.about-section {
+    background: linear-gradient(135deg, #e8f0ff 0%, #f8faff 100%);
+}
+
+/* 💠 Card Style */
+.about-card {
+    background: #ffffff;
+    border-radius: 20px;
+    transition: transform 0.3s ease;
+}
+.about-card:hover {
+    transform: translateY(-6px);
+}
+
+/* 🔹 Frame & Foto Profil */
+.profile-wrapper {
+    width: 200px;               /* Ukuran frame */
+    height: 200px;
+    padding: 5px;                /* Spasi untuk efek border */
+    border-radius: 50%;          /* Tetap bulat */
+    background: linear-gradient(135deg, #ffd700, #f39c12); /* Border gradien emas */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+.profile-wrapper:hover {
+    transform: scale(1.05);      /* Efek zoom saat hover */
+}
+.profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;          /* Foto bulat sempurna */
+    object-fit: cover;           /* Foto menyesuaikan frame tanpa distorsi */
+    border: 4px solid #fff;      /* Border putih di dalam gradien */
+}
+
+/* 🔹 Judul Section */
+.section-title {
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: relative;
+    margin-bottom: 1rem;
+}
+.section-title::after {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 3px;
+    background: #f39c12;
+    margin: 8px auto 0;
+    border-radius: 2px;
+}
+
+/* 🌟 Skill Hover */
+.skill-box {
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+}
+.skill-box:hover {
+    transform: translateY(-5px) scale(1.05);
+}
+
+/* === Bingkai Carousel === */
+.carousel-frame {
+    border: 6px solid #f39c12;        /* warna emas */
+    border-radius: 15px;              /* sudut membulat */
+    padding: 4px;                     /* ruang antara border dan isi */
+    background: linear-gradient(135deg, #ffd700, #f39c12); /* gradien */
+}
+
+/* === Gallery Hover Effect === */
+.gallery-item {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+.gallery-img {
+    transition: all 0.3s ease;
+}
+
+/* === Masonry Gallery ala Google Photos === */
+.masonry-gallery {
+    column-count: 4;        /* banyak kolom (ubah sesuai layar) */
+    column-gap: 15px;       /* jarak antar kolom */
+}
+.masonry-item {
+    display: inline-block;
+    margin-bottom: 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+.masonry-item img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+    transition: all 0.3s ease;
+}
+.masonry-item:hover {
+    transform: scale(1.03);
+}
+
+/* Responsif */
+@media (max-width: 992px) {
+    .masonry-gallery { column-count: 3; }
+}
+@media (max-width: 768px) {
+    .masonry-gallery { column-count: 2; }
+}
+@media (max-width: 576px) {
+    .masonry-gallery { column-count: 1; }
+}
+
+/* Sidebar style */
+aside {
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+aside .nav-link {
+  padding: 8px 12px;
+  border-radius: 6px;
+  transition: background 0.3s;
+}
+aside .nav-link:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* Gallery thumbnail uniform */
+.gallery-item {
+    aspect-ratio: 1/1;     /* bikin kotak persegi */
+    overflow: hidden;
+    border-radius: 10px;
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;     /* isi penuh kotak tanpa distorsi */
+    display: block;
+    transition: transform 0.3s ease;
+}
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+/* === Project Card Images === */
+.card-img-top {
+    height: 200px;       /* atur tinggi seragam, bisa 180–250px sesuai selera */
+    object-fit: cover;   /* gambar dipotong proporsional */
+}

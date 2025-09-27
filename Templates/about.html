@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}About Me{% endblock %}
+
+{% block content %}
+<!-- 🌌 Background Gradient Section -->
+<section class="about-section py-5">
+  <div class="container">
+
+    <!-- 🔹 Judul -->
+    <h1 class="text-center mb-5 fw-bold text-gradient display-4">About Me</h1>
+
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card about-card shadow-lg border-0 p-4 rounded-4">
+
+          <!-- 🔹 Foto Profil -->
+          <div class="text-center mb-4">
+            <div class="profile-wrapper mx-auto">
+              <img src="{{ url_for('static', filename='image/Erudition 4.jpeg') }}"
+                  class="profile-img shadow-lg"
+                  alt="Foto Profil">
+            </div>
+            <h3 class="mt-3 fw-bold name-text">Afdal Adha Firnansyah</h3>
+            <p class="text-muted fst-italic">Student • Developer • Dream Chaser</p>
+          </div>
+
+          <!-- 🔹 Biodata -->
+          <h4 class="section-title">Biodata</h4>
+          <p class="text-muted lead">
+            Saya adalah seorang pelajar di <strong>SMK Negeri 1 Karang Baru</strong> dengan minat besar
+            pada <strong>programming</strong>, <strong>teknologi</strong>, dan <strong>desain web</strong>.
+            Saya percaya bahwa
+            <span class="fw-bold text-primary">“Kreativitas adalah kunci menuju masa depan.”</span>
+          </p>
+
+          <!-- 🔹 Motto -->
+          <h4 class="section-title mt-4">Motto</h4>
+          <blockquote class="blockquote text-center text-secondary px-3">
+            <p class="mb-0">"Bintang paling terang muncul dari kegelapan terdalam."</p>
+          </blockquote>
+
+          <!-- 🔹 Skill -->
+          <h4 class="section-title mt-4">Skills</h4>
+          <div class="row text-center g-4">
+            <div class="col-6 col-md-3">
+              <div class="skill-box">
+                <i class="bi bi-code-slash fs-1 text-primary"></i>
+                <p class="mt-2 fw-semibold">Python & Flask</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="skill-box">
+                <i class="bi bi-braces fs-1 text-warning"></i>
+                <p class="mt-2 fw-semibold">HTML & CSS</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="skill-box">
+                <i class="bi bi-bootstrap fs-1 text-purple"></i>
+                <p class="mt-2 fw-semibold">Bootstrap</p>
+              </div>
+            </div>
+            <div class="col-6 col-md-3">
+              <div class="skill-box">
+                <i class="bi bi-github fs-1 text-dark"></i>
+                <p class="mt-2 fw-semibold">Git & GitHub</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- 🔹 Sosial Media -->
+          <h4 class="section-title mt-5">Connect With Me</h4>
+          <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
+            <a href="https://github.com/Mufarz-boop" target="_blank" class="btn btn-dark px-4">
+              <i class="bi bi-github fs-4 me-2"></i> GitHub
+            </a>
+            <a href="https://www.tiktok.com/@alpheratz.family" target="_blank" class="btn btn-dark px-4">
+              <i class="bi bi-tiktok fs-4 me-2"></i> TikTok
+            </a>
+            <a href="https://instagram.com/eadeon_vortiga" target="_blank" class="btn btn-danger px-4">
+              <i class="bi bi-instagram fs-4 me-2"></i> Instagram
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
