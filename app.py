@@ -1,16 +1,18 @@
 import os
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+import uuid
+from flask import Flask, render_template, request, redirect, url_for, flash
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
+app.secret_key = "supersecretkey"  # tetap static, sesuai permintaan
 
-# 🔹 Folder untuk simpan image & video
+# 🔹 Folder untuk simpan image & video (tetap sama)
 IMAGE_FOLDER = os.path.join(app.static_folder, "image")
 VIDEO_FOLDER = os.path.join(app.static_folder, "video")
 os.makedirs(IMAGE_FOLDER, exist_ok=True)
 os.makedirs(VIDEO_FOLDER, exist_ok=True)
 
-# 🔹 Dummy data blog (gunakan nama file saja, bukan url_for)
+# 🔹 Dummy blog (tetap sama)
 posts = [
     {
         "title": "Belajar Flask dari Nol",
@@ -43,6 +45,76 @@ posts = [
         "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
         "category": "Personal",
         "image_file": "Erudition 11.jpg"
+    },
+    {
+        "title": "Perjalanan Saya di Dunia Web",
+        "date": "10 September 2025",
+        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
+        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
+        "category": "Personal",
+        "image_file": "Erudition 11.jpg"
+    },
+    {
+        "title": "Perjalanan Saya di Dunia Web",
+        "date": "10 September 2025",
+        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
+        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
+        "category": "Personal",
+        "image_file": "Erudition 11.jpg"
+    },
+    {
+        "title": "Perjalanan Saya di Dunia Web",
+        "date": "10 September 2025",
+        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
+        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
+        "category": "Personal",
+        "image_file": "Erudition 11.jpg"
+    }
+]
+
+# 🔹 Dummy projects (baru, supaya template loop jalan)
+projects_data = [
+    {
+        "title": "Nous-Mein",
+        "description": "A project that showcases unique functionality with clean UI.",
+        "image_file": "Erudition 1.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Nous-Mein.git"
+    },
+    {
+        "title": "Enmair",
+        "description": "An innovative solution with futuristic design approach.",
+        "image_file": "Erudition 2.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Enmair.git"
+    },
+    {
+        "title": "Zulkar-Mufarz",
+        "description": "Creative coding experiment blending art and technology.",
+        "image_file": "Erudition 3.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
+    },
+    {
+        "title": "Zulkar-Mufarz",
+        "description": "Creative coding experiment blending art and technology.",
+        "image_file": "Erudition 3.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
+    },
+    {
+        "title": "Zulkar-Mufarz",
+        "description": "Creative coding experiment blending art and technology.",
+        "image_file": "Erudition 3.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
+    },
+    {
+        "title": "Zulkar-Mufarz",
+        "description": "Creative coding experiment blending art and technology.",
+        "image_file": "Erudition 3.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
+    },
+    {
+        "title": "Zulkar-Mufarz",
+        "description": "Creative coding experiment blending art and technology.",
+        "image_file": "Erudition 3.jpg",
+        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
     }
 ]
 
@@ -55,7 +127,7 @@ def home():
 def about():
     return render_template('about.html')
 
-# 🔹 Gallery (images & videos)
+# 🔹 Gallery & Upload (tetap sama)
 @app.route('/gallery')
 def gallery():
     images = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
@@ -94,12 +166,14 @@ def blog_story():
 @app.route('/blog/category/<category>')
 def blog_category(category):
     filtered_posts = [p for p in posts if p['category'].lower() == category.lower()]
+    if not filtered_posts:
+        flash(f"Tidak ada post untuk category '{category}'", "info")
     return render_template('blog_story.html', posts=filtered_posts)
 
-# 🔹 Projects page
+# 🔹 Projects page (dinamis)
 @app.route('/projects')
 def projects():
-    return render_template('projects.html')
+    return render_template('projects.html', projects=projects_data)
 
 if __name__ == '__main__':
     app.run(debug=True)

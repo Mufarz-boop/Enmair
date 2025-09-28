@@ -17,17 +17,21 @@
   backdrop-filter: blur(12px);
   border-radius: 20px;
   overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  position: relative;
 }
 .project-card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3),
-              0 0 25px rgba(255, 127, 80, 0.4);
+              0 0 25px rgba(255, 127, 80, 0.4),
+              0 0 40px rgba(255, 69, 0, 0.3);
+  border-color: rgba(255,127,80,0.4);
 }
 
 /* 🌟 Gambar zoom saat hover */
 .project-card img {
-  transition: transform 0.5s ease;
+  transition: transform 0.6s ease;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
 }
 .project-card:hover img {
   transform: scale(1.1);
@@ -37,11 +41,27 @@
 .project-card .btn-primary {
   background: linear-gradient(90deg, #ff7f50, #ff4500);
   border: none;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .project-card .btn-primary:hover {
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(255, 127, 80, 0.5);
+}
+
+/* 🌟 Animasi fade-up saat scroll */
+.project-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.project-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 🌟 Responsive */
+@media (max-width: 768px) {
+  .col-md-6.col-lg-4 { flex: 0 0 100%; max-width: 100%; }
 }
 </style>
 {% endblock %}
@@ -55,61 +75,43 @@
 
     <!-- Grid Projects -->
     <div class="row g-4">
-      <!-- Project 1 -->
+      {% for project in projects %}
       <div class="col-md-6 col-lg-4">
         <div class="card project-card h-100">
-          <img src="{{ url_for('static', filename='image/Erudition 1.jpg') }}" 
+          <img src="{{ url_for('static', filename='image/' + project.image_file) }}" 
                class="card-img-top" 
-               alt="Screenshot of Nous-Mein project">
+               alt="{{ project.title }}">
           <div class="card-body d-flex flex-column">
-            <h5 class="card-title fw-bold">Nous-Mein</h5>
-            <p class="card-text text-muted">A project that showcases unique functionality with clean UI.</p>
+            <h5 class="card-title fw-bold">{{ project.title }}</h5>
+            <p class="card-text text-muted">{{ project.description }}</p>
             <div class="mt-auto">
-              <a href="https://github.com/Mufarz-boop/Nous-Mein.git" target="_blank" class="btn btn-primary w-100">
+              <a href="{{ project.github_link }}" target="_blank" class="btn btn-primary w-100">
                 <i class="bi bi-github me-1"></i> View Code
               </a>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Project 2 -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card h-100">
-          <img src="{{ url_for('static', filename='image/Erudition 2.jpg') }}" 
-               class="card-img-top" 
-               alt="Screenshot of Enmair project">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title fw-bold">Enmair</h5>
-            <p class="card-text text-muted">An innovative solution with futuristic design approach.</p>
-            <div class="mt-auto">
-              <a href="https://github.com/Mufarz-boop/Enmair.git" target="_blank" class="btn btn-primary w-100">
-                <i class="bi bi-github me-1"></i> View Code
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project 3 -->
-      <div class="col-md-6 col-lg-4">
-        <div class="card project-card h-100">
-          <img src="{{ url_for('static', filename='image/Erudition 3.jpg') }}" 
-               class="card-img-top" 
-               alt="Screenshot of Zulkar-Mufarz project">
-          <div class="card-body d-flex flex-column">
-            <h5 class="card-title fw-bold">Zulkar-Mufarz</h5>
-            <p class="card-text text-muted">Creative coding experiment blending art and technology.</p>
-            <div class="mt-auto">
-              <a href="https://github.com/Mufarz-boop/Zulkar-Mufarz.git" target="_blank" class="btn btn-primary w-100">
-                <i class="bi bi-github me-1"></i> View Code
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      {% endfor %}
     </div>
 
   </div>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// 🌟 Animasi fade-up saat scroll
+const cards = document.querySelectorAll('.project-card');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.2 });
+
+cards.forEach(card => observer.observe(card));
+</script>
 {% endblock %}
