@@ -17,19 +17,79 @@
   <!-- Custom CSS -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-  <!-- Favicon PNG -->
+  <!-- Favicon -->
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
 
   {% block extra_css %}{% endblock %}
+
+  <style>
+    /* 🌟 Navbar Glass Effect */
+    .navbar {
+      background: rgba(20, 20, 20, 0.7) !important;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.4s ease;
+    }
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0%;
+      height: 2px;
+      background: linear-gradient(90deg, #ffcc00, #ff0080);
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 100%;
+    }
+
+    /* 🌟 Footer */
+    footer {
+      background: linear-gradient(135deg, #111, #222);
+      color: #bbb;
+    }
+    footer .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      margin: 0 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    footer .social-links a:hover {
+      transform: translateY(-3px) scale(1.1);
+      background: linear-gradient(135deg, #ffcc00, #ff0080);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(255,0,128,0.4);
+    }
+  </style>
 </head>
-<body>
+<body style="font-family: 'Poppins', sans-serif;">
 
 <!-- 🌟 NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm sticky-top">
   <div class="container">
-    <a class="navbar-brand fw-bold d-flex align-items-center">
-      <i class="bi bi-stars"></i>
-      <span> Star<span><span class="text-warning">King</span></span>
+    <a class="navbar-brand d-flex align-items-center" href="/">
+      <i class="bi bi-stars me-2 text-warning"></i>
+      <span>Star<span class="text-warning">King</span></span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
@@ -37,22 +97,45 @@
 
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/"><i class="bi bi-house-door-fill me-1"></i> Home</a></li>
-        <li class="nav-item"><a class="nav-link {% if request.path=='/about' %}active{% endif %}" href="/about"><i class="bi bi-person-circle me-1"></i> About</a></li>
-        <li class="nav-item"><a class="nav-link {% if request.path=='/gallery' %}active{% endif %}" href="/gallery"><i class="bi bi-image me-1"></i> Gallery</a></li>
-        <li class="nav-item"><a class="nav-link {% if request.path=='/blog' %}active{% endif %}" href="/blog"><i class="bi bi-journal-text me-1"></i> Blog</a></li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/">
+            <i class="bi bi-house-door-fill me-1"></i> Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path=='/about' %}active{% endif %}" href="/about">
+            <i class="bi bi-person-circle me-1"></i> About
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path=='/gallery' %}active{% endif %}" href="/gallery">
+            <i class="bi bi-image me-1"></i> Gallery
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}" href="/blog_story">
+            <i class="bi bi-journal-text me-1"></i> Blog
+          </a>
+        </li>
       </ul>
     </div>
   </div>
 </nav>
 
 <!-- 🌟 CONTENT -->
-{% block content %}{% endblock %}
+<main>
+  {% block content %}{% endblock %}
+</main>
 
 <!-- 🌟 FOOTER -->
-<footer class="bg-dark text-light text-center py-4 mt-5">
+<footer class="text-center py-4 mt-5">
   <div class="container">
-    <p class="mb-3">&copy; 2025 StarKing. All rights reserved.</p>
+    <p class="mb-3">&copy; 2025 <span class="fw-bold">Star<span class="text-warning">King</span></span>. All rights reserved.</p>
+    <div class="social-links d-flex justify-content-center">
+      <a href="https://github.com/Mufarz-boop" target="_blank"><i class="bi bi-github"></i></a>
+      <a href="https://www.tiktok.com/@alpheratz.family" target="_blank"><i class="bi bi-tiktok"></i></a>
+      <a href="https://instagram.com/eadeon_vortiga" target="_blank"><i class="bi bi-instagram"></i></a>
+    </div>
   </div>
 </footer>
 

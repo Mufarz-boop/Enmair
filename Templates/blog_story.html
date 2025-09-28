@@ -1,0 +1,218 @@
+{% extends 'base.html' %}
+{% block title %}My Stories{% endblock %}
+
+{% block extra_css %}
+<style>
+  /* Background & Text Gradient */
+  body {
+    background: linear-gradient(135deg, #f8f9ff, #ffece6);
+  }
+  .text-gradient {
+    background: linear-gradient(90deg, #ff7f50, #ff4500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    margin: 50px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    width: 4px;
+    background: linear-gradient(180deg, #ff7f50, #ff4500, #ff7f50);
+    background-size: 200% 200%;
+    animation: gradientMove 6s ease infinite;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-50%);
+  }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .timeline-item {
+    position: relative;
+    width: 50%;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1s forwards;
+  }
+  .timeline-item:nth-child(even) { animation-delay: 0.3s; }
+  .timeline-item:nth-child(odd) { animation-delay: 0.6s; }
+
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .timeline-item-left { left: 0; text-align: right; }
+  .timeline-item-right { left: 50%; }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    width: 20px;
+    height: 20px;
+    background: #ff7f50;
+    border-radius: 50%;
+    z-index: 1;
+    box-shadow: 0 0 15px rgba(255,127,80,0.9);
+  }
+  .timeline-item-left::before { right: -10px; }
+  .timeline-item-right::before { left: -10px; }
+
+  /* Story Card - Glass Effect */
+  .story-card {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15), 0 0 15px rgba(255,127,80,0.3);
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+    border: 1px solid rgba(255,255,255,0.25);
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  }
+
+  /* Hover Glow */
+  .story-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.2),
+                0 0 20px rgba(255,127,80,0.4),
+                0 0 35px rgba(255,69,0,0.3);
+    border-color: rgba(255,127,80,0.5);
+  }
+
+  /* Open Card (Read More) */
+  .story-card.open {
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3),
+                0 0 30px rgba(255,127,80,0.7),
+                0 0 50px rgba(255,69,0,0.6);
+    border-color: rgba(255,69,0,0.8);
+    animation: pulseGlow 1.5s ease-out;
+  }
+
+  @keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 rgba(255,127,80,0.0); }
+    50% { box-shadow: 0 0 35px rgba(255,127,80,0.7); }
+    100% { box-shadow: 0 20px 40px rgba(0,0,0,0.3), 0 0 30px rgba(255,127,80,0.7); }
+  }
+
+  /* Card Shine Effect */
+  .story-card::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -75%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 80%);
+    transform: skewX(-25deg);
+    transition: left 0.8s ease;
+    pointer-events: none;
+  }
+  .story-card:hover::after { left: 120%; }
+
+  .story-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+  }
+
+  .story-card h5 {
+    transition: text-shadow 0.4s ease;
+  }
+  .story-card:hover h5 {
+    text-shadow: 0 0 10px rgba(255,127,80,0.8), 0 0 20px rgba(255,69,0,0.6);
+  }
+
+  /* Expand/Collapse */
+  .story-card .full-content {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    margin-top: 0;
+    transition: max-height .5s ease, opacity .5s ease, margin-top .5s ease;
+  }
+  .story-card.open .full-content {
+    max-height: 400px;
+    opacity: 1;
+    margin-top: 15px;
+  }
+  .story-card.open .preview { display: none; }
+
+  .btn-toggle {
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .btn-toggle:hover { transform: scale(1.05); }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .timeline::before { left: 20px; }
+    .timeline-item, .timeline-item-left, .timeline-item-right {
+      width: 100%;
+      left: 0 !important;
+      text-align: left !important;
+      padding-left: 50px;
+      padding-right: 20px;
+      padding-bottom: 40px;
+    }
+    .timeline-item::before { left: 10px; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="py-5">
+  <div class="container">
+    <h1 class="text-center mb-5 fw-bold text-gradient display-4">My Stories ✨</h1>
+
+    <div class="timeline">
+      {% for post in posts %}
+      <div id="story-{{ loop.index }}" class="timeline-item {% if loop.index % 2 == 0 %}timeline-item-right{% else %}timeline-item-left{% endif %}">
+        <div class="story-card">
+          <img src="{{ url_for('static', filename='image/' + post.image_file) }}" alt="{{ post.title }}">
+          <div class="p-4">
+            <h5 class="fw-bold">{{ post.title }}</h5>
+            <small class="text-muted">{{ post.date }} | {{ post.category }}</small>
+            <p class="mt-2 preview">{{ post.preview }}</p>
+            <p class="full-content">{{ post.full }}</p>
+            <button class="btn btn-outline-primary mt-2 btn-toggle">Read More</button>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.querySelectorAll('.btn-toggle').forEach((btn, index) => {
+  btn.addEventListener('click', function(){
+    const card = this.closest('.story-card');
+    const container = document.getElementById(`story-${index+1}`);
+    card.classList.toggle('open');
+    this.innerText = card.classList.contains('open') ? 'Read Less' : 'Read More';
+
+    if(card.classList.contains('open')){
+      container.scrollIntoView({behavior: "smooth", block: "center"});
+    }
+  });
+});
+</script>
+{% endblock %}

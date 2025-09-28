@@ -1,40 +1,112 @@
 {% extends 'base.html' %}
 {% block title %}Home{% endblock %}
 
+{% block extra_css %}
+<style>
+/* 🌟 Gambar normal tanpa zoom */
+.carousel-item img {
+  transition: none;
+  transform: none;
+  will-change: auto;
+}
+
+/* 🌟 Glass Effect pada frame */
+.carousel-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(255,255,255,0.2), 
+              0 0 40px rgba(0,255,255,0.2), 
+              0 0 60px rgba(255,0,255,0.2);
+  position: relative;
+}
+
+/* 🌟 Shine Effect */
+.carousel-frame::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255,255,255,0.6) 0%,
+    rgba(255,255,255,0) 80%
+  );
+  transform: skewX(-25deg);
+  animation: shine 6s infinite;
+  pointer-events: none;
+}
+@keyframes shine {
+  0% { left: -75%; }
+  50% { left: 125%; }
+  100% { left: 125%; }
+}
+
+/* 🌟 Overlay gradient di atas gambar */
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.3) 0%,
+    rgba(0,0,0,0.15) 50%,
+    rgba(0,0,0,0.5) 100%
+  );
+  z-index: 1;
+}
+.carousel-caption {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 12px rgba(0,0,0,0.8);
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container mt-4">
 
-  <!-- 🔹 Carousel -->
-  <div id="carouselExampleRide" class="carousel slide shadow rounded overflow-hidden carousel-scale carousel-frame" data-bs-ride="carousel">
+  <!-- 🔹 Carousel otomatis -->
+  <div id="carouselExampleRide" 
+       class="carousel slide shadow carousel-frame" 
+       data-bs-ride="carousel" 
+       data-bs-interval="2000"> <!-- 4 detik per slide -->
+
     <div class="carousel-inner">
-      <div class="carousel-item active">
+      <div class="carousel-item active position-relative">
         <img src="{{ url_for('static', filename='image/Erudition 1.jpg') }}" class="d-block w-100" alt="Slide 1">
         <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5>Tiga Penguasa Sumeru</h5>
+          <h5 class="fw-bold">Tiga Penguasa Sumeru</h5>
           <p>Penguasa Sumeru pada masa tiga kerajaan</p>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item position-relative">
         <img src="{{ url_for('static', filename='image/Erudition 2.jpg') }}" class="d-block w-100" alt="Slide 2">
         <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5>Khaen'riah</h5>
+          <h5 class="fw-bold">Khaen'riah</h5>
           <p>500 Tahun Lalu</p>
         </div>
       </div>
-      <div class="carousel-item">
+      <div class="carousel-item position-relative">
         <img src="{{ url_for('static', filename='image/Erudition 3.jpg') }}" class="d-block w-100" alt="Slide 3">
         <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5>Three Character</h5>
+          <h5 class="fw-bold">Three Character</h5>
           <p>Maharaja Seno Marseno, Collei dan Tighnari</p>
         </div>
       </div>
     </div>
+
+    <!-- Control -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="carousel-control-prev-icon"></span>
       <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="carousel-control-next-icon"></span>
       <span class="visually-hidden">Next</span>
     </button>
   </div>
@@ -44,7 +116,7 @@
     <h1 class="display-4 fw-bold">THE STAR-KING OF THE MAIN WORLD</h1>
     <p class="lead">
       In this brief life, many people appear—some strong, some weak, some wealthy, some poor. Humanity builds civilizations and destroys them; some choose to wander, exploring this fleeting world.
-      </p>
+    </p>
     <a href="/projects" class="btn btn-outline-secondary btn-lg mt-3 ms-2">
       <i class="bi bi-folder2-open me-1"></i>Lihat Project
     </a>

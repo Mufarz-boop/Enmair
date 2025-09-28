@@ -1,6 +1,51 @@
 {% extends 'base.html' %}
 {% block title %}Projects{% endblock %}
 
+{% block extra_css %}
+<style>
+/* 🌟 Judul gradasi */
+.text-gradient {
+  background: linear-gradient(90deg, #ff7f50, #ff4500);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🌟 Card Glass Effect */
+.project-card {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(12px);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.project-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3),
+              0 0 25px rgba(255, 127, 80, 0.4);
+}
+
+/* 🌟 Gambar zoom saat hover */
+.project-card img {
+  transition: transform 0.5s ease;
+}
+.project-card:hover img {
+  transform: scale(1.1);
+}
+
+/* 🌟 Tombol custom */
+.project-card .btn-primary {
+  background: linear-gradient(90deg, #ff7f50, #ff4500);
+  border: none;
+  transition: transform 0.3s ease;
+}
+.project-card .btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 127, 80, 0.5);
+}
+</style>
+{% endblock %}
+
 {% block content %}
 <section class="py-5">
   <div class="container">
@@ -12,13 +57,13 @@
     <div class="row g-4">
       <!-- Project 1 -->
       <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden">
+        <div class="card project-card h-100">
           <img src="{{ url_for('static', filename='image/Erudition 1.jpg') }}" 
                class="card-img-top" 
                alt="Screenshot of Nous-Mein project">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title fw-bold">Nous-Mein</h5>
-            <p class="card-text text-muted"></p>
+            <p class="card-text text-muted">A project that showcases unique functionality with clean UI.</p>
             <div class="mt-auto">
               <a href="https://github.com/Mufarz-boop/Nous-Mein.git" target="_blank" class="btn btn-primary w-100">
                 <i class="bi bi-github me-1"></i> View Code
@@ -30,13 +75,13 @@
 
       <!-- Project 2 -->
       <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden">
+        <div class="card project-card h-100">
           <img src="{{ url_for('static', filename='image/Erudition 2.jpg') }}" 
                class="card-img-top" 
                alt="Screenshot of Enmair project">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title fw-bold">Enmair</h5>
-            <p class="card-text text-muted"></p>
+            <p class="card-text text-muted">An innovative solution with futuristic design approach.</p>
             <div class="mt-auto">
               <a href="https://github.com/Mufarz-boop/Enmair.git" target="_blank" class="btn btn-primary w-100">
                 <i class="bi bi-github me-1"></i> View Code
@@ -48,13 +93,13 @@
 
       <!-- Project 3 -->
       <div class="col-md-6 col-lg-4">
-        <div class="card shadow-lg border-0 rounded-4 h-100 overflow-hidden">
+        <div class="card project-card h-100">
           <img src="{{ url_for('static', filename='image/Erudition 3.jpg') }}" 
                class="card-img-top" 
                alt="Screenshot of Zulkar-Mufarz project">
           <div class="card-body d-flex flex-column">
             <h5 class="card-title fw-bold">Zulkar-Mufarz</h5>
-            <p class="card-text text-muted"></p>
+            <p class="card-text text-muted">Creative coding experiment blending art and technology.</p>
             <div class="mt-auto">
               <a href="https://github.com/Mufarz-boop/Zulkar-Mufarz.git" target="_blank" class="btn btn-primary w-100">
                 <i class="bi bi-github me-1"></i> View Code

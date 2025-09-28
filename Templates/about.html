@@ -2,89 +2,174 @@
 {% block title %}About Me{% endblock %}
 
 {% block content %}
-<!-- 🌌 Background Gradient Section -->
-<section class="about-section py-5">
-  <div class="container">
+<main class="flex-grow-1 d-flex flex-column justify-content-between">
+  <section class="about-section py-5 flex-grow-1 d-flex align-items-start" 
+           style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); min-height:100vh;">
+    <div class="container text-center">
 
-    <!-- 🔹 Judul -->
-    <h1 class="text-center mb-5 fw-bold text-gradient display-4">About Me</h1>
+      <!-- 🔹 Judul -->
+      <h1 class="mb-5 fw-bold display-3 gradient-grey" style="font-weight:900; animation: fadeInDown 1s ease;">
+        About Me ✨
+      </h1>
 
-    <div class="row justify-content-center">
-      <div class="col-md-10 col-lg-8">
-        <div class="card about-card shadow-lg border-0 p-4 rounded-4">
+      <!-- Card Profile -->
+      <div class="card about-card border-0 p-4 rounded-4 shadow-lg mx-auto mb-5 animate-fade-up"
+           style="max-width: 800px;
+                  background: rgba(255, 255, 255, 0.15);
+                  backdrop-filter: blur(15px);
+                  border: 1px solid rgba(255,255,255,0.2);
+                  position: relative;
+                  overflow: hidden;">
+        
+        <!-- Shine effect -->
+        <div class="shine"></div>
 
-          <!-- 🔹 Foto Profil -->
-          <div class="text-center mb-4">
-            <div class="profile-wrapper mx-auto">
-              <img src="{{ url_for('static', filename='image/Erudition 4.jpeg') }}"
-                  class="profile-img shadow-lg"
-                  alt="Foto Profil">
-            </div>
-            <h3 class="mt-3 fw-bold name-text">Afdal Adha Firnansyah</h3>
-            <p class="text-muted fst-italic">Student • Developer • Dream Chaser</p>
+        <!-- Foto Profil -->
+        <div class="mb-4">
+          <img src="{{ url_for('static', filename='image/Erudition 4.jpeg') }}"
+               class="profile-img shadow-lg"
+               alt="Foto Profil"
+               style="width: 160px; height:160px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(0,0,0,0.2);">
+          <h3 class="mt-3 fw-bold gradient-grey">Afdal Adha Firnansyah</h3>
+          <p class="fst-italic gradient-grey">Student • Developer • Dream Chaser</p>
+        </div>
+
+        <!-- Biodata -->
+        <h4 class="section-title gradient-grey">Biodata</h4>
+        <div class="divider"></div>
+        <p class="lead mx-auto gradient-grey" style="max-width:700px;">
+          Pelajar di <strong>SMK Negeri 1 Karang Baru</strong> dengan minat besar
+          pada <strong>programming</strong>, <strong>teknologi</strong>, dan <strong>desain web</strong>.
+        </p>
+
+        <!-- Motto -->
+        <h4 class="section-title mt-4 gradient-grey">Motto</h4>
+        <div class="divider"></div>
+        <blockquote class="blockquote mx-auto gradient-grey" style="max-width:600px;">
+          <p class="mb-0 fst-italic">"Bintang paling terang muncul dari kegelapan terdalam."</p>
+        </blockquote>
+
+        <!-- Skills -->
+        <h4 class="section-title mt-4 gradient-grey">Skills</h4>
+        <div class="divider"></div>
+        <div class="row justify-content-center text-center g-4">
+          <div class="col-6 col-md-3 animate-fade-up">
+            <i class="bi bi-code-slash fs-1 text-dark"></i>
+            <p class="mt-2 fw-semibold">Python & Flask</p>
           </div>
-
-          <!-- 🔹 Biodata -->
-          <h4 class="section-title">Biodata</h4>
-          <p class="text-muted lead">
-            Saya adalah seorang pelajar di <strong>SMK Negeri 1 Karang Baru</strong> dengan minat besar
-            pada <strong>programming</strong>, <strong>teknologi</strong>, dan <strong>desain web</strong>.
-            Saya percaya bahwa
-            <span class="fw-bold text-primary">“Kreativitas adalah kunci menuju masa depan.”</span>
-          </p>
-
-          <!-- 🔹 Motto -->
-          <h4 class="section-title mt-4">Motto</h4>
-          <blockquote class="blockquote text-center text-secondary px-3">
-            <p class="mb-0">"Bintang paling terang muncul dari kegelapan terdalam."</p>
-          </blockquote>
-
-          <!-- 🔹 Skill -->
-          <h4 class="section-title mt-4">Skills</h4>
-          <div class="row text-center g-4">
-            <div class="col-6 col-md-3">
-              <div class="skill-box">
-                <i class="bi bi-code-slash fs-1 text-primary"></i>
-                <p class="mt-2 fw-semibold">Python & Flask</p>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="skill-box">
-                <i class="bi bi-braces fs-1 text-warning"></i>
-                <p class="mt-2 fw-semibold">HTML & CSS</p>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="skill-box">
-                <i class="bi bi-bootstrap fs-1 text-purple"></i>
-                <p class="mt-2 fw-semibold">Bootstrap</p>
-              </div>
-            </div>
-            <div class="col-6 col-md-3">
-              <div class="skill-box">
-                <i class="bi bi-github fs-1 text-dark"></i>
-                <p class="mt-2 fw-semibold">Git & GitHub</p>
-              </div>
-            </div>
+          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .2s;">
+            <i class="bi bi-braces fs-1 text-dark"></i>
+            <p class="mt-2 fw-semibold">HTML & CSS</p>
           </div>
-
-          <!-- 🔹 Sosial Media -->
-          <h4 class="section-title mt-5">Connect With Me</h4>
-          <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
-            <a href="https://github.com/Mufarz-boop" target="_blank" class="btn btn-dark px-4">
-              <i class="bi bi-github fs-4 me-2"></i> GitHub
-            </a>
-            <a href="https://www.tiktok.com/@alpheratz.family" target="_blank" class="btn btn-dark px-4">
-              <i class="bi bi-tiktok fs-4 me-2"></i> TikTok
-            </a>
-            <a href="https://instagram.com/eadeon_vortiga" target="_blank" class="btn btn-danger px-4">
-              <i class="bi bi-instagram fs-4 me-2"></i> Instagram
-            </a>
+          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .4s;">
+            <i class="bi bi-bootstrap fs-1 text-dark"></i>
+            <p class="mt-2 fw-semibold">Bootstrap</p>
           </div>
-
+          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .6s;">
+            <i class="bi bi-github fs-1 text-dark"></i>
+            <p class="mt-2 fw-semibold">Git & GitHub</p>
+          </div>
         </div>
       </div>
+
+      <!-- Card Journey -->
+      <div class="card about-card border-0 p-4 rounded-4 shadow-lg mx-auto mb-5 animate-fade-up"
+           style="max-width: 800px;
+                  background: rgba(255, 255, 255, 0.15);
+                  backdrop-filter: blur(15px);
+                  border: 1px solid rgba(255,255,255,0.2);">
+        <h4 class="section-title mb-3 gradient-grey">My Journey 🚀</h4>
+        <div class="divider"></div>
+        <p class="mx-auto gradient-grey" style="max-width:700px;">
+          Aku memulai perjalanan coding dari rasa penasaran, coba-coba bikin website sederhana.
+          Dari sekedar <span style="color:#444;">"Hello World"</span> di HTML, sampai akhirnya jatuh cinta dengan Flask, Bootstrap, dan dunia web dev.
+        </p>
+        <p class="mx-auto gradient-grey" style="max-width:700px;">
+          Selain ngoding, aku juga suka <strong>desain</strong>, main <strong>game</strong>, dan kadang menulis cerita fiksi biar imajinasi tetap hidup ✨.
+        </p>
+
+        <!-- Connect -->
+        <h4 class="section-title mt-5 gradient-grey">Connect With Me</h4>
+        <div class="divider"></div>
+        <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
+          <a href="https://github.com/Mufarz-boop" target="_blank" 
+             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn github-btn">
+            <i class="bi bi-github fs-4 me-2"></i> GitHub
+          </a>
+          <a href="https://www.tiktok.com/@alpheratz.family" target="_blank" 
+             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn tiktok-btn">
+            <i class="bi bi-tiktok fs-4 me-2"></i> TikTok
+          </a>
+          <a href="https://instagram.com/eadeon_vortiga" target="_blank" 
+             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn insta-btn">
+            <i class="bi bi-instagram fs-4 me-2"></i> Instagram
+          </a>
+        </div>
+      </div>
+
     </div>
-  </div>
-</section>
+  </section>
+</main>
+
+<style>
+/* Gradient abu-hitam dengan shine */
+.gradient-grey {
+  background: linear-gradient(90deg, #111, #666, #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shine-grey 4s linear infinite;
+  background-size: 200% auto;
+}
+@keyframes shine-grey {
+  to { background-position: 200% center; }
+}
+
+/* Divider Glow */
+.divider {
+  height: 3px;
+  width: 80px;
+  margin: 8px auto 20px;
+  background: linear-gradient(90deg, transparent, #fff, transparent);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.7);
+}
+
+/* Shine effect */
+.shine {
+  position: absolute;
+  top: 0; left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,.4) 0%, rgba(255,255,255,0) 80%);
+  transform: skewX(-25deg);
+  animation: shine-move 6s infinite;
+}
+@keyframes shine-move {
+  0% { left: -100%; }
+  60% { left: 200%; }
+  100% { left: 200%; }
+}
+
+/* Animasi masuk */
+@keyframes fadeInUp {
+  from {opacity:0; transform:translateY(30px);}
+  to {opacity:1; transform:translateY(0);}
+}
+@keyframes fadeInDown {
+  from {opacity:0; transform:translateY(-30px);}
+  to {opacity:1; transform:translateY(0);}
+}
+.animate-fade-up { animation: fadeInUp 1s ease forwards; }
+
+/* Profile image */
+.profile-img { transition: transform 0.3s ease; }
+.profile-img:hover { transform: scale(1.08); }
+
+/* Buttons */
+.connect-btn { transition: all .3s ease; border: none; }
+.connect-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+.github-btn { background: #24292e; color: #fff; }
+.tiktok-btn { background: linear-gradient(45deg, #000, #ff0050, #00f2ea); color: #fff; }
+.insta-btn  { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5); color: #fff; }
+</style>
 {% endblock %}
