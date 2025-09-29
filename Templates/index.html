@@ -64,6 +64,49 @@
   z-index: 2;
   text-shadow: 0 0 12px rgba(0,0,0,0.8);
 }
+
+/* 🌟 Semua gambar punya ukuran konsisten */
+.carousel-item img {
+  height: 500px;              /* Sesuaikan tinggi sesuai kebutuhan */
+  width: 100%;                /* Lebar penuh */
+  object-fit: cover;          /* Potong gambar agar tetap proporsional */
+  object-position: center;    /* Fokus di tengah */
+  transition: none;
+  transform: none;
+  will-change: auto;
+}
+
+/* 🌟 Efek untuk judul intro */
+.intro-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, #000, #555, #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  text-shadow: 0 0 15px rgba(0,0,0,0.8), 0 0 25px rgba(255,255,255,0.3);
+  animation: shine-move 6s linear infinite;
+}
+
+/* 🌟 Efek untuk deskripsi */
+.intro-desc {
+  font-size: 1.3rem;
+  font-style: italic;
+  background: linear-gradient(90deg, #111, #666, #aaa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 8px rgba(0,0,0,0.7);
+  background-size: 200% auto;
+  animation: shine-move 10s linear infinite;
+}
+
+/* 🌟 Animasi Shine */
+@keyframes shine-move {
+  to {
+    background-position: 200% center;
+  }
+}
+
 </style>
 {% endblock %}
 
@@ -77,28 +120,56 @@
        data-bs-interval="2000"> <!-- 4 detik per slide -->
 
     <div class="carousel-inner">
-      <div class="carousel-item active position-relative">
-        <img src="{{ url_for('static', filename='image/Erudition 1.jpg') }}" class="d-block w-100" alt="Slide 1">
-        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5 class="fw-bold">Tiga Penguasa Sumeru</h5>
-          <p>Penguasa Sumeru pada masa tiga kerajaan</p>
-        </div>
-      </div>
-      <div class="carousel-item position-relative">
-        <img src="{{ url_for('static', filename='image/Erudition 2.jpg') }}" class="d-block w-100" alt="Slide 2">
-        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5 class="fw-bold">Khaen'riah</h5>
-          <p>500 Tahun Lalu</p>
-        </div>
-      </div>
-      <div class="carousel-item position-relative">
-        <img src="{{ url_for('static', filename='image/Erudition 3.jpg') }}" class="d-block w-100" alt="Slide 3">
-        <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
-          <h5 class="fw-bold">Three Character</h5>
-          <p>Maharaja Seno Marseno, Collei dan Tighnari</p>
-        </div>
-      </div>
+  <div class="carousel-item active position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 1.jpg') }}" class="d-block w-100" alt="Slide 1">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Tiga Penguasa Sumeru</h5>
+      <p>Kisah para raja yang menguasai Sumeru pada masa tiga kerajaan.</p>
     </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 2.jpg') }}" class="d-block w-100" alt="Slide 2">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Keruntuhan Khaen'riah</h5>
+      <p>Peradaban besar yang runtuh 500 tahun lalu meninggalkan misteri.</p>
+    </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 10.jpg') }}" class="d-block w-100" alt="Slide 3">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Melodi Waktu dan Mesin Takdir</h5>
+      <p>di hadapan piano mekanis raksasa, ia memainkan harmoni antara waktu, mimpi, dan mesin.</p>
+    </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 4.jpeg') }}" class="d-block w-100" alt="Slide 4">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Reruntuhan Kuno</h5>
+      <p>Jejak peninggalan Khaen'riah yang tersembunyi di bawah tanah.</p>
+    </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 22.jpg') }}" class="d-block w-100" alt="Slide 5">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Legenda yang Hilang</h5>
+      <p>Kisah para pahlawan yang hanya tersisa dalam mitos dan cerita rakyat.</p>
+    </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 6.jpeg') }}" class="d-block w-100" alt="Slide 6">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Kegelapan Khaen'riah</h5>
+      <p>Tragedi besar yang membuat negeri ini dihantui kutukan abadi.</p>
+    </div>
+  </div>
+  <div class="carousel-item position-relative">
+    <img src="{{ url_for('static', filename='image/Erudition 7.jpeg') }}" class="d-block w-100" alt="Slide 7">
+    <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded p-2">
+      <h5 class="fw-bold">Harapan yang Tersisa</h5>
+      <p>Meski runtuh, masih ada secercah cahaya untuk membangun kembali.</p>
+    </div>
+  </div>
+</div>
 
     <!-- Control -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
@@ -113,12 +184,12 @@
 
   <!-- 🔹 Intro -->
   <div class="text-center mt-5">
-    <h1 class="display-4 fw-bold">THE STAR-KING OF THE MAIN WORLD</h1>
+    <h1 class="display-4 fw-bold">THE STAR-KING OF THE DAWN WORLD</h1>
     <p class="lead">
-      In this brief life, many people appear—some strong, some weak, some wealthy, some poor. Humanity builds civilizations and destroys them; some choose to wander, exploring this fleeting world.
+      "Manusia hanyalah pengembara di dunia fana, yang membawa luka dan harapan dalam satu langkah."
     </p>
-    <a href="/projects" class="btn btn-outline-secondary btn-lg mt-3 ms-2">
-      <i class="bi bi-folder2-open me-1"></i>Lihat Project
+    <a href="/library" class="btn btn-outline-secondary btn-lg mt-3 ms-2">
+      <i class="bi bi-folder2-open me-1"></i>Library
     </a>
   </div>
 </div>

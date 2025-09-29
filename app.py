@@ -1,121 +1,54 @@
 import os
-import uuid
+from flask import render_template, flash
 from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"  # tetap static, sesuai permintaan
+app.secret_key = "supersecretkey"
 
-# 🔹 Folder untuk simpan image & video (tetap sama)
+# 🔹 Folder untuk simpan image & video
 IMAGE_FOLDER = os.path.join(app.static_folder, "image")
 VIDEO_FOLDER = os.path.join(app.static_folder, "video")
 os.makedirs(IMAGE_FOLDER, exist_ok=True)
 os.makedirs(VIDEO_FOLDER, exist_ok=True)
 
-# 🔹 Dummy blog (tetap sama)
+app.config['UPLOAD_FOLDER'] = IMAGE_FOLDER
+app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg', 'gif'}
+
+PROFILE_FILENAME = 'profile.jpg'  # nama file profil tetap
+
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
+
+
+# 🔹 Dummy blog - Penyesuaian Post
 posts = [
     {
-        "title": "Belajar Flask dari Nol",
-        "date": "27 September 2025",
-        "preview": "Flask itu microframework Python yang ringan...",
-        "full": "Flask adalah framework Python yang memudahkan pembuatan website dinamis. Dengan Flask, kita bisa membuat routing, template, form handling, dan API endpoint dengan mudah. Cocok untuk belajar konsep web development dan prototyping cepat.",
-        "category": "Coding",
-        "image_file": "Erudition 14.jpg"
+        "title": "Enmair - Website Dinamis dengan Flask",
+        "date": "29 September 2025",
+        "preview": "Sebuah proyek website interaktif menggunakan Flask dan Bootstrap.",
+        "full": (
+            "Enmair adalah proyek website dinamis yang dibangun menggunakan Flask, "
+            "mengintegrasikan template rendering, routing, dan framework CSS seperti Bootstrap. "
+            "Website ini menampilkan halaman Home, About, dan fitur login sederhana, "
+            "serta menggunakan desain modern dengan efek kaca dan animasi halus. "
+            "Sangat cocok sebagai referensi belajar full-stack web development."
+        ),
+        "category": "Full-Stack Web",
+        "link": "https://github.com/Mufarz-boop/Enmair.git",
     },
-    {
-        "title": "Tips Styling dengan CSS Modern",
-        "date": "20 September 2025",
-        "preview": "CSS modern sekarang punya banyak fitur keren...",
-        "full": "Dengan CSS modern, kita bisa membuat layout lebih fleksibel menggunakan flexbox, grid, dan custom properties. Animasi dan transisi pun lebih smooth. Hal ini bikin desain lebih rapi, responsif, dan mudah di-maintain.",
-        "category": "CSS",
-        "image_file": "Erudition 13.jpg"
-    },
-    {
-        "title": "Mengapa GitHub Penting?",
-        "date": "15 September 2025",
-        "preview": "GitHub bukan cuma tempat taruh kode...",
-        "full": "GitHub menyediakan repository online untuk kode, memudahkan kolaborasi tim, version control, dan dokumentasi. Recruiter juga sering mengecek GitHub kandidat untuk melihat kualitas kode dan project yang pernah dibuat.",
-        "category": "GitHub",
-        "image_file": "Erudition 12.jpg"
-    },
-    {
-        "title": "Perjalanan Saya di Dunia Web",
-        "date": "10 September 2025",
-        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
-        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
-        "category": "Personal",
-        "image_file": "Erudition 11.jpg"
-    },
-    {
-        "title": "Perjalanan Saya di Dunia Web",
-        "date": "10 September 2025",
-        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
-        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
-        "category": "Personal",
-        "image_file": "Erudition 11.jpg"
-    },
-    {
-        "title": "Perjalanan Saya di Dunia Web",
-        "date": "10 September 2025",
-        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
-        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
-        "category": "Personal",
-        "image_file": "Erudition 11.jpg"
-    },
-    {
-        "title": "Perjalanan Saya di Dunia Web",
-        "date": "10 September 2025",
-        "preview": "Dari Hello World sampai jatuh cinta dengan web dev...",
-        "full": "Aku mulai coding karena penasaran, mencoba HTML, CSS, Bootstrap, hingga Flask. Sekarang aku makin percaya diri membuat website sendiri.",
-        "category": "Personal",
-        "image_file": "Erudition 11.jpg"
-    }
 ]
 
-# 🔹 Dummy projects (baru, supaya template loop jalan)
-projects_data = [
+# 🔹 Dummy libraries
+libraries_data = [
     {
-        "title": "Nous-Mein",
-        "description": "A project that showcases unique functionality with clean UI.",
-        "image_file": "Erudition 1.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Nous-Mein.git"
+        "title": "Pakai Otakmu",
+        "description": "Library untuk membuat antarmuka pengguna interaktif dengan desain minimalis.",
+        "type": "image",
+        "file": "Erudition 11.jpg",
+        "link": "https://www.youtube.com/watch?v=KwI_ePEniGQ"
     },
-    {
-        "title": "Enmair",
-        "description": "An innovative solution with futuristic design approach.",
-        "image_file": "Erudition 2.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Enmair.git"
-    },
-    {
-        "title": "Zulkar-Mufarz",
-        "description": "Creative coding experiment blending art and technology.",
-        "image_file": "Erudition 3.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
-    },
-    {
-        "title": "Zulkar-Mufarz",
-        "description": "Creative coding experiment blending art and technology.",
-        "image_file": "Erudition 3.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
-    },
-    {
-        "title": "Zulkar-Mufarz",
-        "description": "Creative coding experiment blending art and technology.",
-        "image_file": "Erudition 3.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
-    },
-    {
-        "title": "Zulkar-Mufarz",
-        "description": "Creative coding experiment blending art and technology.",
-        "image_file": "Erudition 3.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
-    },
-    {
-        "title": "Zulkar-Mufarz",
-        "description": "Creative coding experiment blending art and technology.",
-        "image_file": "Erudition 3.jpg",
-        "github_link": "https://github.com/Mufarz-boop/Zulkar-Mufarz.git"
-    }
 ]
 
 # 🔹 Routes utama
@@ -123,16 +56,33 @@ projects_data = [
 def home():
     return render_template('index.html')
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
-# 🔹 Gallery & Upload (tetap sama)
+@app.route('/about', methods=['GET', 'POST'])
+def about():
+    if request.method == 'POST':
+        file = request.files.get('profile')
+        if file and allowed_file(file.filename):
+            save_path = os.path.join(app.config['UPLOAD_FOLDER'], PROFILE_FILENAME)
+            # Hapus file lama jika ada
+            if os.path.exists(save_path):
+                os.remove(save_path)
+            # Simpan file baru
+            file.save(save_path)
+            flash("Foto profil berhasil diperbarui!", "success")
+            return redirect(url_for('about'))
+
+    # Profile image selalu nama file tetap
+    profile_image = PROFILE_FILENAME
+    return render_template('about.html', profile_image=profile_image)
+
+
+# 🔹 Gallery & Upload
 @app.route('/gallery')
 def gallery():
     images = [f for f in os.listdir(IMAGE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg', '.gif'))]
     videos = [f for f in os.listdir(VIDEO_FOLDER) if f.lower().endswith(('.mp4', '.webm', '.avi'))]
     return render_template('gallery.html', images=images, videos=videos, total=len(images))
+
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -158,22 +108,27 @@ def upload():
     flash(f"{file.filename} berhasil diupload!", "success")
     return redirect(url_for('gallery'))
 
-# 🔹 Blog storytelling
+
 @app.route('/blog_story')
-def blog_story():
-    return render_template('blog_story.html', posts=posts)
+@app.route('/blog_story/<category>')
+def blog_story(category=None):
+    categories = sorted(set(p['category'] for p in posts))
 
-@app.route('/blog/category/<category>')
-def blog_category(category):
-    filtered_posts = [p for p in posts if p['category'].lower() == category.lower()]
-    if not filtered_posts:
-        flash(f"Tidak ada post untuk category '{category}'", "info")
-    return render_template('blog_story.html', posts=filtered_posts)
+    if category:
+        filtered_posts = [p for p in posts if p['category'].lower() == category.lower()]
+        if not filtered_posts:
+            flash(f"Tidak ada post untuk kategori '{category}'", "info")
+            filtered_posts = posts  # fallback menampilkan semua post
+        return render_template('blog_story.html', posts=filtered_posts, categories=categories, active_category=category)
+    
+    return render_template('blog_story.html', posts=posts, categories=categories, active_category=None)
 
-# 🔹 Projects page (dinamis)
-@app.route('/projects')
-def projects():
-    return render_template('projects.html', projects=projects_data)
+
+# 🔹 Library page
+@app.route('/library')
+def library():
+    return render_template('library.html', libraries=libraries_data)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

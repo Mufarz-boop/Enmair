@@ -4,7 +4,7 @@
 {% block content %}
 <main class="flex-grow-1 d-flex flex-column justify-content-between">
   <section class="about-section py-5 flex-grow-1 d-flex align-items-start" 
-           style="background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%); min-height:100vh;">
+           style="background: none; min-height:100vh;">
     <div class="container text-center">
 
       <!-- 🔹 Judul -->
@@ -20,16 +20,21 @@
                   border: 1px solid rgba(255,255,255,0.2);
                   position: relative;
                   overflow: hidden;">
-        
+
         <!-- Shine effect -->
         <div class="shine"></div>
 
         <!-- Foto Profil -->
         <div class="mb-4">
-          <img src="{{ url_for('static', filename='image/Erudition 4.jpeg') }}"
-               class="profile-img shadow-lg"
-               alt="Foto Profil"
-               style="width: 160px; height:160px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(0,0,0,0.2);">
+          <img src="{{ url_for('static', filename='image/' + profile_image) }}"
+            class="profile-img shadow-lg"
+            alt="Foto Profil"
+            style="width: 160px; height:160px; object-fit: cover; border-radius: 50%; border: 3px solid rgba(0,0,0,0.2); cursor:pointer;"
+            data-bs-toggle="modal" data-bs-target="#profileModal">
+            <form method="POST" enctype="multipart/form-data" class="mt-3">
+              <label for="profile" class="btn btn-primary rounded-pill">Ganti Foto Profil</label>
+              <input type="file" name="profile" id="profile" accept="image/*" style="display:none;" onchange="this.form.submit()">
+            </form>
           <h3 class="mt-3 fw-bold gradient-grey">Afdal Adha Firnansyah</h3>
           <p class="fst-italic gradient-grey">Student • Developer • Dream Chaser</p>
         </div>
@@ -37,79 +42,97 @@
         <!-- Biodata -->
         <h4 class="section-title gradient-grey">Biodata</h4>
         <div class="divider"></div>
-        <p class="lead mx-auto gradient-grey" style="max-width:700px;">
-          Pelajar di <strong>SMK Negeri 1 Karang Baru</strong> dengan minat besar
-          pada <strong>programming</strong>, <strong>teknologi</strong>, dan <strong>desain web</strong>.
-        </p>
+        <div class="table-responsive">
+          <table class="table text-start mx-auto biodata-table" style="max-width:700px;">
+            <tbody>
+              <tr>
+                <th>Nama Lengkap</th>
+                <td><strong>Afdal Adha Firnansyah</strong></td>
+              </tr>
+              <tr>
+                <th>Tempat, Tanggal Lahir</th>
+                <td>Karang Baru, 2007</td>
+              </tr>
+              <tr>
+                <th>Alamat</th>
+                <td>Karang Baru, Aceh Tamiang, Indonesia</td>
+              </tr>
+              <tr>
+                <th>Pendidikan</th>
+                <td><strong>SMK Negeri 1 Karang Baru</strong> (Rekayasa Perangkat Lunak)</td>
+              </tr>
+              <tr>
+                <th>Hobi</th>
+                <td>Ngoding, Desain, Gaming, Menulis Fiksi</td>
+              </tr>
+              <tr>
+                <th>Minat</th>
+                <td>Web Development, UI/UX Design, Teknologi, Open Source</td>
+              </tr>
+              <tr>
+                <th>Cita-cita</th>
+                <td><em>Menjadi Full-Stack Developer dan menciptakan produk digital bermanfaat ✨</em></td>
+              </tr>
+              <tr>
+                <th>Email</th>
+                <td>
+                  <a href="mailto:afdalfirnansyah@gmail.com" class="email-link">afdalfirnansyah@gmail.com</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
 
-        <!-- Motto -->
-        <h4 class="section-title mt-4 gradient-grey">Motto</h4>
-        <div class="divider"></div>
-        <blockquote class="blockquote mx-auto gradient-grey" style="max-width:600px;">
-          <p class="mb-0 fst-italic">"Bintang paling terang muncul dari kegelapan terdalam."</p>
-        </blockquote>
+        <!-- Card Journey -->
+        <div class="card about-card border-0 p-4 rounded-4 shadow-lg mx-auto mb-5 animate-fade-up"
+             style="max-width: 800px;
+                    background: rgba(255, 255, 255, 0.15);
+                    backdrop-filter: blur(15px);
+                    border: 1px solid rgba(255,255,255,0.2);">
+          <h4 class="section-title mb-3 gradient-grey">My Journey 🚀</h4>
+          <div class="divider"></div>
+          <p class="mx-auto gradient-grey" style="max-width:700px;">
+            Aku memulai perjalanan coding dari rasa penasaran, coba-coba bikin website sederhana.
+            Dari sekedar <span style="color:#444;">"Hello World"</span> di HTML, sampai akhirnya jatuh cinta dengan Flask, Bootstrap, dan dunia web dev.
+          </p>
+          <p class="mx-auto gradient-grey" style="max-width:700px;">
+            Selain ngoding, aku juga suka <strong>desain</strong>, main <strong>game</strong>, dan kadang menulis cerita fiksi biar imajinasi tetap hidup ✨.
+          </p>
 
-        <!-- Skills -->
-        <h4 class="section-title mt-4 gradient-grey">Skills</h4>
-        <div class="divider"></div>
-        <div class="row justify-content-center text-center g-4">
-          <div class="col-6 col-md-3 animate-fade-up">
-            <i class="bi bi-code-slash fs-1 text-dark"></i>
-            <p class="mt-2 fw-semibold">Python & Flask</p>
-          </div>
-          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .2s;">
-            <i class="bi bi-braces fs-1 text-dark"></i>
-            <p class="mt-2 fw-semibold">HTML & CSS</p>
-          </div>
-          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .4s;">
-            <i class="bi bi-bootstrap fs-1 text-dark"></i>
-            <p class="mt-2 fw-semibold">Bootstrap</p>
-          </div>
-          <div class="col-6 col-md-3 animate-fade-up" style="animation-delay: .6s;">
-            <i class="bi bi-github fs-1 text-dark"></i>
-            <p class="mt-2 fw-semibold">Git & GitHub</p>
+          <!-- Connect -->
+          <h4 class="section-title mt-5 gradient-grey">Connect With Me</h4>
+          <div class="divider"></div>
+          <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
+            <a href="https://github.com/Mufarz-boop" target="_blank" 
+               class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn github-btn">
+              <i class="bi bi-github fs-4 me-2"></i> GitHub
+            </a>
+            <a href="https://www.tiktok.com/@alpheratz.family" target="_blank" 
+               class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn tiktok-btn">
+              <i class="bi bi-tiktok fs-4 me-2"></i> TikTok
+            </a>
+            <a href="https://instagram.com/eadeon_vortiga" target="_blank" 
+               class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn insta-btn">
+              <i class="bi bi-instagram fs-4 me-2"></i> Instagram
+            </a>
           </div>
         </div>
+
       </div>
-
-      <!-- Card Journey -->
-      <div class="card about-card border-0 p-4 rounded-4 shadow-lg mx-auto mb-5 animate-fade-up"
-           style="max-width: 800px;
-                  background: rgba(255, 255, 255, 0.15);
-                  backdrop-filter: blur(15px);
-                  border: 1px solid rgba(255,255,255,0.2);">
-        <h4 class="section-title mb-3 gradient-grey">My Journey 🚀</h4>
-        <div class="divider"></div>
-        <p class="mx-auto gradient-grey" style="max-width:700px;">
-          Aku memulai perjalanan coding dari rasa penasaran, coba-coba bikin website sederhana.
-          Dari sekedar <span style="color:#444;">"Hello World"</span> di HTML, sampai akhirnya jatuh cinta dengan Flask, Bootstrap, dan dunia web dev.
-        </p>
-        <p class="mx-auto gradient-grey" style="max-width:700px;">
-          Selain ngoding, aku juga suka <strong>desain</strong>, main <strong>game</strong>, dan kadang menulis cerita fiksi biar imajinasi tetap hidup ✨.
-        </p>
-
-        <!-- Connect -->
-        <h4 class="section-title mt-5 gradient-grey">Connect With Me</h4>
-        <div class="divider"></div>
-        <div class="d-flex justify-content-center flex-wrap gap-3 mt-3">
-          <a href="https://github.com/Mufarz-boop" target="_blank" 
-             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn github-btn">
-            <i class="bi bi-github fs-4 me-2"></i> GitHub
-          </a>
-          <a href="https://www.tiktok.com/@alpheratz.family" target="_blank" 
-             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn tiktok-btn">
-            <i class="bi bi-tiktok fs-4 me-2"></i> TikTok
-          </a>
-          <a href="https://instagram.com/eadeon_vortiga" target="_blank" 
-             class="btn px-4 rounded-pill fw-semibold shadow-sm connect-btn insta-btn">
-            <i class="bi bi-instagram fs-4 me-2"></i> Instagram
-          </a>
-        </div>
-      </div>
-
     </div>
   </section>
 </main>
+
+<div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content bg-transparent border-0 shadow-none">
+      <div class="modal-body p-0">
+        <img src="{{ url_for('static', filename='image/' + profile_image) }}" class="w-100 rounded" alt="Foto Profil Besar">
+      </div>
+      <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"></button>
+    </div>
+  </div>
+</div>
 
 <style>
 /* Gradient abu-hitam dengan shine */
@@ -120,9 +143,7 @@
   animation: shine-grey 4s linear infinite;
   background-size: 200% auto;
 }
-@keyframes shine-grey {
-  to { background-position: 200% center; }
-}
+@keyframes shine-grey { to { background-position: 200% center; } }
 
 /* Divider Glow */
 .divider {
@@ -131,8 +152,46 @@
   margin: 8px auto 20px;
   background: linear-gradient(90deg, transparent, #fff, transparent);
   border-radius: 2px;
-  box-shadow: 0 0 10px rgba(255,255,255,0.7);
+  box-shadow: 0 0 12px rgba(255,255,255,0.8);
 }
+
+/* Animasi masuk */
+@keyframes fadeInUp { from {opacity:0; transform:translateY(30px);} to {opacity:1; transform:translateY(0);} }
+@keyframes fadeInDown { from {opacity:0; transform:translateY(-30px);} to {opacity:1; transform:translateY(0);} }
+.animate-fade-up { animation: fadeInUp 1s ease forwards; }
+
+/* Foto profil efek hover */
+.profile-img { transition: transform 0.4s ease, box-shadow 0.4s ease; }
+.profile-img:hover { transform: scale(1.1) rotate(2deg); box-shadow: 0 10px 25px rgba(0,0,0,0.3); cursor:pointer; }
+
+/* Button connect */
+.connect-btn { transition: all .3s ease; border: none; }
+.connect-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
+.github-btn { background: #24292e; color: #fff; }
+.tiktok-btn { background: linear-gradient(45deg, #000, #ff0050, #00f2ea); color: #fff; }
+.insta-btn  { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5); color: #fff; }
+
+/* Biodata Table Styling */
+.biodata-table { border-collapse: separate; border-spacing: 0 10px; width: 100%; animation: fadeInUp 1.2s ease forwards; }
+.biodata-table th { width: 200px; font-weight: 700; color: #222; text-transform: uppercase; letter-spacing: .5px; padding: 10px; }
+.biodata-table td { color: #333; font-weight: 500; padding: 10px; background: rgba(255,255,255,0.25); border-radius: 8px; backdrop-filter: blur(6px); transition: all 0.4s ease; }
+.biodata-table tr:hover td { background: rgba(255,255,255,0.4); transform: scale(1.02); }
+
+/* Animasi baris muncul satu-satu */
+.biodata-table tr { opacity: 0; transform: translateX(-20px); animation: rowFadeIn 0.8s ease forwards; }
+.biodata-table tr:nth-child(1) { animation-delay: 0.2s; }
+.biodata-table tr:nth-child(2) { animation-delay: 0.4s; }
+.biodata-table tr:nth-child(3) { animation-delay: 0.6s; }
+.biodata-table tr:nth-child(4) { animation-delay: 0.8s; }
+.biodata-table tr:nth-child(5) { animation-delay: 1s; }
+.biodata-table tr:nth-child(6) { animation-delay: 1.2s; }
+.biodata-table tr:nth-child(7) { animation-delay: 1.4s; }
+.biodata-table tr:nth-child(8) { animation-delay: 1.6s; }
+@keyframes rowFadeIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
+
+/* Email hover effect */
+.email-link {color: #000; text-decoration: none; font-weight: 600; transition: all .3s ease; }
+.email-link:hover { color: #0066ff; text-shadow: 0 0 8px rgba(0,102,255,0.7); }
 
 /* Shine effect */
 .shine {
@@ -149,27 +208,5 @@
   60% { left: 200%; }
   100% { left: 200%; }
 }
-
-/* Animasi masuk */
-@keyframes fadeInUp {
-  from {opacity:0; transform:translateY(30px);}
-  to {opacity:1; transform:translateY(0);}
-}
-@keyframes fadeInDown {
-  from {opacity:0; transform:translateY(-30px);}
-  to {opacity:1; transform:translateY(0);}
-}
-.animate-fade-up { animation: fadeInUp 1s ease forwards; }
-
-/* Profile image */
-.profile-img { transition: transform 0.3s ease; }
-.profile-img:hover { transform: scale(1.08); }
-
-/* Buttons */
-.connect-btn { transition: all .3s ease; border: none; }
-.connect-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-.github-btn { background: #24292e; color: #fff; }
-.tiktok-btn { background: linear-gradient(45deg, #000, #ff0050, #00f2ea); color: #fff; }
-.insta-btn  { background: linear-gradient(45deg, #feda75, #d62976, #962fbf, #4f5bd5); color: #fff; }
 </style>
 {% endblock %}

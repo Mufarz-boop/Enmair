@@ -23,17 +23,20 @@
   {% block extra_css %}{% endblock %}
 
   <style>
+    html { scroll-behavior: smooth; }
+
     /* 🌟 Navbar Glass Effect */
     .navbar {
-      background: rgba(20, 20, 20, 0.7) !important;
+      background: rgba(20,20,20,0.6);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.4s ease;
+      border-bottom: 1px solid rgba(255,255,255,0.15);
+      transition: background 0.4s ease, box-shadow 0.3s ease;
     }
     .navbar-brand {
       font-weight: 700;
       letter-spacing: 1px;
+      font-size: 1.35rem;
     }
     .nav-link {
       position: relative;
@@ -46,40 +49,82 @@
       left: 0;
       bottom: -4px;
       width: 0%;
-      height: 2px;
+      height: 3px;
       background: linear-gradient(90deg, #ffcc00, #ff0080);
-      transition: width 0.3s ease;
+      transition: width 0.35s ease;
       border-radius: 2px;
     }
     .nav-link:hover::after,
     .nav-link.active::after {
       width: 100%;
     }
+    .nav-link:hover {
+      color: #ffcc00;
+    }
 
-    /* 🌟 Footer */
+    /* Navbar icons */
+    .nav-link i {
+      transition: transform 0.3s ease;
+    }
+    .nav-link:hover i {
+      transform: translateY(-2px) scale(1.1);
+      color: #ff0080;
+    }
+
+    /* 🌟 Footer Glass */
     footer {
-      background: linear-gradient(135deg, #111, #222);
-      color: #bbb;
+      background: rgba(20,20,20,0.95);
+      color: #ccc;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 3rem 0 1rem;
+      position: relative;
+    }
+    footer .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 0.5rem;
     }
     footer .social-links a {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
-      margin: 0 6px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       background: rgba(255,255,255,0.05);
       color: #fff;
-      font-size: 1.2rem;
-      transition: all 0.3s ease;
+      font-size: 1.4rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
     }
-    footer .social-links a:hover {
-      transform: translateY(-3px) scale(1.1);
-      background: linear-gradient(135deg, #ffcc00, #ff0080);
-      color: #fff;
-      box-shadow: 0 4px 12px rgba(255,0,128,0.4);
+    footer .social-links a::before {
+      content: "";
+      position: absolute;
+      width: 120%;
+      height: 120%;
+      background: linear-gradient(45deg, #ffcc00, #ff0080, #ffcc00);
+      top: -10%;
+      left: -10%;
+      transform: rotate(45deg);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      z-index: 0;
     }
+    footer .social-links a:hover::before {
+      opacity: 0.6;
+    }
+    footer .social-links a i {
+      position: relative;
+      z-index: 1;
+    }
+    footer p {
+      margin-bottom: 0.5rem;
+    }
+
+    main { padding-top: 2rem; padding-bottom: 2rem; }
   </style>
 </head>
 <body style="font-family: 'Poppins', sans-serif;">
@@ -89,35 +134,36 @@
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
       <i class="bi bi-stars me-2 text-warning"></i>
-      <span>Star<span class="text-warning">King</span></span>
+      Star<span class="text-warning">King</span>
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/">
-            <i class="bi bi-house-door-fill me-1"></i> Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path=='/about' %}active{% endif %}" href="/about">
-            <i class="bi bi-person-circle me-1"></i> About
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path=='/gallery' %}active{% endif %}" href="/gallery">
-            <i class="bi bi-image me-1"></i> Gallery
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}" href="/blog_story">
-            <i class="bi bi-journal-text me-1"></i> Blog
-          </a>
-        </li>
-      </ul>
+      <!-- 🌟 NAVBAR ICONS -->
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link {% if request.path=='/' %}active{% endif %}" href="/">
+              <i class="bi bi-house-heart-fill me-1"></i> Home
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path=='/about' %}active{% endif %}" href="/about">
+              <i class="bi bi-person-badge-fill me-1"></i> About
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path=='/gallery' %}active{% endif %}" href="/gallery">
+              <i class="bi bi-image-fill me-1"></i> Gallery
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}" href="/blog_story">
+              <i class="bi bi-journal-bookmark-fill me-1"></i> Blog
+            </a>
+          </li>
+        </ul>
     </div>
   </div>
 </nav>
@@ -128,20 +174,20 @@
 </main>
 
 <!-- 🌟 FOOTER -->
-<footer class="text-center py-4 mt-5">
-  <div class="container">
-    <p class="mb-3">&copy; 2025 <span class="fw-bold">Star<span class="text-warning">King</span></span>. All rights reserved.</p>
-    <div class="social-links d-flex justify-content-center">
-      <a href="https://github.com/Mufarz-boop" target="_blank"><i class="bi bi-github"></i></a>
-      <a href="https://www.tiktok.com/@alpheratz.family" target="_blank"><i class="bi bi-tiktok"></i></a>
-      <a href="https://instagram.com/eadeon_vortiga" target="_blank"><i class="bi bi-instagram"></i></a>
-    </div>
-  </div>
+<footer>
+  <div class="container text-center">
+    <p class="fw-bold">&copy; 2025 Star<span class="text-warning">King</span>. All Rights Reserved.</p>
+    <!-- 🌟 FOOTER ICONS -->
+      <div class="social-links">
+        <a href="https://github.com/Mufarz-boop" target="_blank"><i class="bi bi-github"></i></a>
+        <a href="https://www.tiktok.com/@alpheratz.family" target="_blank"><i class="bi bi-tiktok"></i></a>
+        <a href="https://instagram.com/eadeon_vortiga" target="_blank"><i class="bi bi-instagram"></i></a>
+        <a href="#"><i class="bi bi-twitter"></i></a>
+      </div>
 </footer>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 {% block scripts %}{% endblock %}
 </body>
 </html>
