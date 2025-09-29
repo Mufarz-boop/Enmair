@@ -24,7 +24,31 @@
 
   <style>
     html { scroll-behavior: smooth; }
-    body { font-family: 'Poppins', sans-serif; background-color: #0a0a0a; color: #fff; }
+    body { 
+      font-family: 'Poppins', sans-serif; 
+      background-color: #0a0a0a; 
+      color: #e0e0e0; /* 🌟 warna global lebih soft */
+      line-height: 1.7;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #ffffff; /* heading tetap putih biar menonjol */
+      font-weight: 700;
+    }
+
+    p {
+      color: #d0d0d0; /* paragraf abu-abu muda */
+    }
+
+    a {
+      color: #ffcc00; 
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #ff0080; /* aksen hover */
+    }
 
     /* 🌟 Navbar Glass */
     .navbar {
@@ -85,7 +109,7 @@
       height: 50px;
       border-radius: 50%;
       background: rgba(255,255,255,0.05);
-      color: #fff;
+      color: #ffffff;
       font-size: 1.4rem;
       position: relative;
       overflow: hidden;
@@ -109,6 +133,43 @@
     footer p { margin-bottom: 0.5rem; font-weight: 500; }
 
     main { padding-top: 2.5rem; padding-bottom: 3rem; }
+
+    /* 🌟 Old Money Clock */
+    .nav-clock {
+      font-family: 'Times New Roman', serif; /* vibes klasik */
+      font-size: 1rem;
+      color: #e5c100; /* emas elegan */
+      letter-spacing: 1px;
+      border: 1px solid rgba(229,193,0,0.4);
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(6px);
+      box-shadow: inset 0 0 6px rgba(229,193,0,0.2), 0 0 6px rgba(229,193,0,0.2);
+      transition: all 0.3s ease-in-out;
+    }
+    .nav-clock:hover {
+      color: #fff;
+      background: rgba(229,193,0,0.1);
+      border-color: #e5c100;
+      transform: scale(1.05);
+    }
+
+    /* 🌟 Modal vibes old money */
+    #modalClock {
+      font-family: 'Times New Roman', serif;
+      letter-spacing: 2px;
+      text-shadow: 0 0 12px rgba(229,193,0,0.5);
+    }
+    #calendar {
+      font-family: 'Poppins', sans-serif;
+      color: #dcdcdc;
+    }
+    #countdown {
+      font-family: 'Times New Roman', serif;
+      letter-spacing: 1px;
+    }
+
   </style>
 </head>
 <body>
@@ -139,6 +200,11 @@
           <a class="nav-link {% if request.path.startswith('/blog') %}active{% endif %}" href="/blog_story"><i class="bi bi-journal-bookmark-fill me-1"></i> Blog</a>
         </li>
       </ul>
+
+      <li class="nav-item d-flex align-items-center ms-3">
+        <span id="clock" class="nav-clock fw-semibold"></span>
+      </li>
+
     </div>
   </div>
 </nav>
@@ -156,7 +222,6 @@
       <a href="https://github.com/Mufarz-boop" target="_blank"><i class="bi bi-github"></i></a>
       <a href="https://www.tiktok.com/@alpheratz.family" target="_blank"><i class="bi bi-tiktok"></i></a>
       <a href="https://instagram.com/eadeon_vortiga" target="_blank"><i class="bi bi-instagram"></i></a>
-      <a href="#"><i class="bi bi-twitter"></i></a>
     </div>
   </div>
 </footer>
@@ -164,6 +229,75 @@
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% block scripts %}{% endblock %}
+
+<!-- 🌟 Modal Clock & Calendar -->
+<div class="modal fade" id="clockModal" tabindex="-1" aria-labelledby="clockModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-dark text-light border border-warning border-opacity-50 shadow-lg">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold text-warning" id="clockModalLabel"><i class="bi bi-clock-history me-2"></i>Old Money Time</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <!-- Jam realtime -->
+        <h1 id="modalClock" class="display-3 fw-bold text-warning"></h1>
+        <!-- Kalender -->
+        <p id="calendar" class="lead text-info mb-3"></p>
+        <!-- Countdown Tahun Baru -->
+        <h5 class="fw-semibold">Countdown to New Year 🎆</h5>
+        <p id="countdown" class="fs-5 text-warning"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    let h = now.getHours().toString().padStart(2, "0");
+    let m = now.getMinutes().toString().padStart(2, "0");
+    let s = now.getSeconds().toString().padStart(2, "0");
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+</script>
+
+<script>
+  // Update navbar clock
+  function updateClock() {
+    const now = new Date();
+    let h = now.getHours().toString().padStart(2, "0");
+    let m = now.getMinutes().toString().padStart(2, "0");
+    let s = now.getSeconds().toString().padStart(2, "0");
+    document.getElementById("clock").textContent = `${h}:${m}:${s}`;
+    document.getElementById("modalClock").textContent = `${h}:${m}:${s}`;
+
+    // Kalender
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    document.getElementById("calendar").textContent = now.toLocaleDateString('en-GB', options);
+
+    // Countdown Tahun Baru
+    const year = now.getFullYear() + 1;
+    const newYear = new Date(`January 1, ${year} 00:00:00`).getTime();
+    const distance = newYear - now.getTime();
+
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // Klik jam navbar → buka modal
+  document.getElementById("clock").style.cursor = "pointer";
+  document.getElementById("clock").setAttribute("data-bs-toggle", "modal");
+  document.getElementById("clock").setAttribute("data-bs-target", "#clockModal");
+</script>
 
 </body>
 </html>

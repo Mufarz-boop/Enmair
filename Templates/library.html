@@ -15,7 +15,7 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
-/* 🌟 Library Card dengan efek kaca + mengkilat */
+/* 🌟 Library Card */
 .library-card {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -27,47 +27,42 @@
   backdrop-filter: blur(10px);
   position: relative;
   overflow: hidden;
+  color: #f1f1f1;
 }
 
-.library-card::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: linear-gradient(45deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
-  transform: rotate(25deg);
-  pointer-events: none;
-  transition: all 0.5s ease;
+/* Judul */
+.library-card h6 {
+  font-weight: 600;
+  color: #ffffff; /* putih default */
+  transition: color 0.3s ease;
 }
 
-.library-card:hover::before {
-  top: -25%;
-  left: -25%;
+/* Deskripsi */
+.library-card small {
+  color: rgba(240,240,240,0.75); /* putih lembut */
+  transition: opacity 0.3s ease;
 }
 
+/* Hover efek */
+.sidebar .library-card:hover h6 {
+  color: #ff7f50;
+}
+.sidebar .library-card:hover small {
+  opacity: 0.95;
+}
+
+/* Efek hover keseluruhan */
 .library-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(255,127,80,0.5), 0 0 15px rgba(255,255,255,0.3);
   background: rgba(255, 255, 255, 0.15);
 }
-
 .library-card.active {
   border: 2px solid #ff7f50;
   box-shadow: 0 0 12px rgba(255, 127, 80, 0.6);
 }
 
-/* 🌟 Hover warna berbeda untuk judul card di sidebar */
-.sidebar .library-card h6 {
-  transition: color 0.3s ease;
-}
-
-.sidebar .library-card:hover h6 {
-  color: #ff7f50; /* default */
-}
-
-/* 🌟 Detail panel dengan efek kaca */
+/* 🌟 Detail panel */
 .detail-panel {
   background: rgba(255,255,255,0.08);
   backdrop-filter: blur(15px);
@@ -88,8 +83,11 @@
   color: #ff7f50;
   font-weight: bold;
 }
+.detail-panel p {
+  color: #333; /* teks isi lebih gelap agar mudah dibaca */
+}
 
-/* 🌟 Tombol custom di panel detail */
+/* Tombol */
 #detailPanel .btn-primary {
   background: linear-gradient(90deg, #ff7f50, #ff4500);
   border: none;
@@ -98,38 +96,6 @@
 #detailPanel .btn-primary:hover {
   transform: scale(1.05);
   box-shadow: 0 5px 15px rgba(255, 127, 80, 0.5);
-}
-
-/* 🌟 Gambar di detail panel agar seragam */
-#detailImage {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* 🌟 Animasi kilau berjalan di card saat hover */
-.library-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -75%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(
-    120deg,
-    rgba(255,255,255,0) 0%,
-    rgba(255,255,255,0.3) 50%,
-    rgba(255,255,255,0) 100%
-  );
-  transform: skewX(-25deg);
-  transition: all 0.7s ease;
-}
-
-.library-card:hover::after {
-  left: 125%;
 }
 </style>
 {% endblock %}

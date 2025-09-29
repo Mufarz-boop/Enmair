@@ -6,6 +6,7 @@
 body {
   background: linear-gradient(135deg, #f8f9ff, #ffece6);
   min-height: 100vh;
+  color: #333; /* teks default */
 }
 
 /* 🌟 Sidebar kiri */
@@ -33,6 +34,20 @@ body {
   transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
 }
 
+.blog-card h6 {
+  color: #222;
+  font-weight: 600;
+}
+
+.blog-card small {
+  color: #666;
+  font-size: 0.85rem;
+}
+
+.blog-card:hover h6 {
+  color: #ff7f50; /* aksen coral */
+}
+
 .blog-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(255,127,80,0.5), 0 0 10px rgba(255,255,255,0.3);
@@ -57,19 +72,12 @@ body {
   transform: translateY(20px);
   transition: opacity 0.5s ease, transform 0.5s ease;
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  color: #333;
 }
 
 .detail-panel.active {
   opacity: 1;
   transform: translateY(0);
-}
-
-.detail-panel img {
-  width: 100%;
-  max-height: 300px;
-  object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 15px;
 }
 
 .detail-panel h3 {
@@ -80,12 +88,13 @@ body {
 
 .detail-panel small {
   display: block;
-  color: #555;
+  color: #777;
   margin-bottom: 15px;
 }
 
 .detail-panel p {
-  color: #333;
+  color: #444;
+  line-height: 1.6;
 }
 
 .detail-panel .btn-primary {
@@ -120,7 +129,7 @@ body {
                data-full="{{ post.full }}"
                data-link="{{ post.link if post.link else '#' }}">
             <h6 class="fw-bold mb-1">{{ post.title }}</h6>
-            <small class="text-muted">{{ post.category }} | {{ post.date }}</small>
+            <small>{{ post.category }} | {{ post.date }}</small>
           </div>
           {% endfor %}
         </div>
@@ -148,7 +157,6 @@ const panel = document.getElementById('detailPanel');
 const titleEl = document.getElementById('detailTitle');
 const metaEl = document.getElementById('detailMeta');
 const contentEl = document.getElementById('detailContent');
-const mediaContainer = document.getElementById('mediaContainer');
 const linkEl = document.getElementById('detailLink');
 
 let activeCard = null;
@@ -156,28 +164,22 @@ let activeCard = null;
 cards.forEach(card => {
   card.addEventListener('click', () => {
     if(activeCard === card){
-      // Jika klik lagi, tutup panel
       card.classList.remove('active');
       panel.classList.remove('active');
-      mediaContainer.classList.add('d-none');
       activeCard = null;
       return;
     }
 
-    // Hilangkan aktif pada card lain
     cards.forEach(c => c.classList.remove('active'));
     card.classList.add('active');
     activeCard = card;
 
-    // Update panel content
     titleEl.textContent = card.dataset.title;
     metaEl.textContent = card.dataset.category + ' | ' + card.dataset.date;
     contentEl.textContent = card.dataset.full;
     linkEl.href = card.dataset.link;
 
-    // Tampilkan panel tanpa scroll otomatis
     panel.classList.add('active');
-    // panel.scrollIntoView({behavior:"smooth"});  <- baris ini dihapus
   });
 });
 </script>

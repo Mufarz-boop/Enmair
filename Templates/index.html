@@ -107,6 +107,68 @@
   }
 }
 
+/* 🌟 Efek smooth zoom hanya di slide aktif */
+.carousel-item.active img {
+  transform: scale(1.05);
+  transition: transform 4s ease-in-out;
+}
+
+/* 🌟 Tambahkan rounded + shadow ke gambar */
+.carousel-item img {
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+}
+
+/* 🌟 Overlay gradient lebih halus */
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.25) 0%,
+    rgba(0,0,0,0.05) 40%,
+    rgba(0,0,0,0.35) 100%
+  );
+  border-radius: 18px;
+  z-index: 1;
+}
+
+/* 🌟 Caption dengan animasi fade-in */
+.carousel-caption {
+  position: relative;
+  z-index: 2;
+  text-shadow: 0 0 10px rgba(0,0,0,0.8);
+  animation: fadeInUp 1.5s ease forwards;
+  opacity: 0;
+}
+
+.carousel-item.active .carousel-caption {
+  opacity: 1;
+}
+
+/* 🌟 Keyframes fade-in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 🌟 Border neon tipis di frame */
+.carousel-frame {
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid rgba(0,255,255,0.3);
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 25px rgba(0,255,255,0.25),
+              0 0 40px rgba(255,0,255,0.25);
+}
 </style>
 {% endblock %}
 
